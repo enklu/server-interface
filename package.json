@@ -1,0 +1,22 @@
+{
+  "name": "server-interface",
+  "version": "1.0.0",
+  "description": "A nice (shared) interface between our clients and our (many) servers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enklu/server-interface.git"
+  },
+  "author": "Zack Jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enklu/server-interface/issues"
+  },
+  "homepage": "https://github.com/enklu/server-interface#readme",
+  "dependencies": {
+    "js-util": "git+ssh://git@github.com/enklu/js-util.git"
+  }
+}
