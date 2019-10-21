@@ -1,13 +1,5 @@
 import { log } from 'js-util';
-
-/**
- * Constants for async request status.
- */
-export const AsyncStatus = {
-  IN_PROGRESS: "inprogress",
-  SUCCESS: "success",
-  FAILURE: "failure"
-};
+import { AsyncStatus } from '../constants/AsyncStatus';
 
 /**
  * Shows fatal errors.
