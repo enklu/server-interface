@@ -3,7 +3,7 @@ import * as TrellisActions from './src/js/actions/trellisActions';
 import * as StargazerActions from './src/js/actions/stargazerActions';
 import { AsyncStatus } from './src/js/constants/AsyncStatus';
 
-module.exports = {
+export const {
   ...Actions,
   ...TrellisActions,
   ...StargazerActions,
