@@ -1,5 +1,5 @@
 import { log } from 'js-util';
-import { AsyncStatus } from '../constants/AsyncStatus';
+import AsyncStatus from '../constants/AsyncStatus';
 
 /**
  * Shows fatal errors.
