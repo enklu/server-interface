@@ -8,7 +8,6 @@ const { Actions } = require('../index');
 
 describe('index', () => {
   it('should export the correct items', () => {
-    expect(index).toContainAllKeys(['Actions', 'AsyncStatus', 'TrellisActions', 'StargazerActions']);
-    console.log(index)
+    expect(index).toContainAllKeys(['Actions', 'AsyncStatus', 'TrellisActions', 'StargazerActions', 'SnapActions']);
   });
 });
