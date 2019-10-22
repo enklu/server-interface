@@ -1,21 +1,22 @@
-import { log } from 'js-util';
 import AsyncStatus from '../constants/AsyncStatus';
+import AsyncMethods from '../constants/AsyncMethods';
 
 /**
  * Shows fatal errors.
  */
-export const FATALERROR = "app.fatalerror";
+export const FATALERROR = 'app.fatalerror';
+
 export function fatalerror(error) {
   return {
     type: FATALERROR,
-    error: error
+    error
   };
 }
 
 export function createAddHandler(handlers) {
-  return function(name, handler) {
-    handlers[name] = function(state, action) {
-      const requests = {...state.requests};
+  return function (name, handler) {
+    handlers[name] = function (state, action) {
+      const requests = { ...state.requests };
 
       requests[name] = {
         status: action.status
@@ -28,7 +29,8 @@ export function createAddHandler(handlers) {
               ...state,
               requests
             },
-            action);
+            action
+          );
         }
         case AsyncStatus.SUCCESS: {
           return handler(
@@ -36,7 +38,8 @@ export function createAddHandler(handlers) {
               ...state,
               requests
             },
-            action);
+            action
+          );
         }
         case AsyncStatus.FAILURE: {
           requests[name].error = action.response.error;
@@ -46,14 +49,15 @@ export function createAddHandler(handlers) {
               ...state,
               requests
             },
-            action);
+            action
+          );
         }
       }
 
       return handler(state, action);
     };
-  }
-};
+  };
+}
 
 /**
  * Creates an action factory for receiving a message type.
@@ -62,21 +66,21 @@ function receive(type) {
   return function (response, request) {
     if (response.success) {
       return {
-        type: type,
+        type,
         status: AsyncStatus.SUCCESS,
         body: response.body,
-        response: response,
-        request:request,
+        response,
+        request,
         time: Date.now()
       };
     }
 
     return {
-      type: type,
+      type,
       status: AsyncStatus.FAILURE,
       error: response.error,
-      response: response,
-      request:request,
+      response,
+      request,
       time: Date.now()
     };
   };
@@ -86,23 +90,39 @@ function receive(type) {
  * Creates an action factory for sending a message type.
  */
 function send(type) {
-  return function(request, replacements) {
+  return function (request, replacements) {
     return {
-      type: type,
+      type,
       status: AsyncStatus.IN_PROGRESS,
       request: {
         body: request,
-        replacements: replacements
+        replacements
       }
     };
-  }
+  };
 }
 
 function defaultReplacements() {
-  var replacements = {};
-
-  return replacements;
+  // These must be lowercase.
+  return io.sails.user
+    ? { userid: io.sails.user.id }
+    : {};
 }
+
+// Some code-generated params do not match our naming conventions. Rather than depend on remembering this fact every
+// time they are used, we simply change them here.
+// NOTE: This will overwrite params if there is already a property by the corrected name.
+export const correctParams = (replacementMap = {}) => (params = {}) => Object.entries(params)
+  .reduce((accum, [name, value]) => ({
+    ...accum,
+    [replacementMap[name] || name]: value
+  }), {});
+
+export const prepareObjectKeys = (replacementsMap = {}) => (obj = {}) => Object.entries(obj || {})
+  .reduce((accum, [name, value]) => ({
+    ...accum,
+    [(replacementsMap[name] || name).toLowerCase()]: value
+  }), {});
 
 /**
  * Replaces tokens in endpoint with replacements.
@@ -110,190 +130,98 @@ function defaultReplacements() {
 function replace(endpoint, _replacements) {
   const replacements = {
     ...defaultReplacements(),
-    ..._replacements
+    ...prepareObjectKeys({ collaboratorId: 'secondarycollaboratorid' })(_replacements)
   };
 
-  var prepared = endpoint;
-  Object.keys(replacements).forEach((key) => {
-    prepared = prepared.replace(":" + key, replacements[key]);
-  });
+  let prepared = endpoint.toLowerCase();
+  Object.keys(replacements)
+    .forEach((key) => {
+      prepared = prepared.replace(`:${key}`, replacements[key]);
+    });
 
-  if (-1 !== prepared.indexOf("{{")) {
-    throw "Endpoint did not contain all replacements : " + endpoint;
+  if (prepared.includes(':')) {
+    throw new Error(
+      `Replacements did not contain all endpoint requirements: ${prepared} ${Object.keys(replacements)}.`
+    );
+  }
+
+  if (prepared.indexOf('{{') !== -1) {
+    throw new Error(`Endpoint did not contain all replacements: ${endpoint}`);
   }
 
   return prepared;
 }
 
-/**
- * Exported method to create a thunk from a message type and endpoint.
- */
-function getify(type, endpoint) {
-  var sender = send(type);
-  var receiver = receive(type);
+const requestify = (type, endpointTemplate, method) => (_body, _replacements = {}) => {
+  // TODO Can remove this if we go through the codebase and change every call.
+  const { body, replacements } = {
+    GET: {
+      body: null,
+      replacements: _body
+    },
+    POST: {
+      body: _body,
+      replacements: _replacements
+    },
+    PUT: {
+      body: _body,
+      replacements: _replacements
+    },
+    DELETE: {
+      body: null,
+      replacements: _body
+    }
+  }[method];
 
-  return function(replacements = {}) {
-    var modifiedEndpoint = window.env.stargazerUrl + replace(endpoint, replacements);
+  // redux-thunk will execute this thunk and inject dispatch() in the process.
+  // The thunk will return a Promise, which won't matter for normal async actions.
+  // For combo events, this promise will be used to monitor the state of the request.
+  const thunk = dispatch => new Promise((resolve, reject) => {
+    const sender = send(type);
+    const receiver = receive(type);
+    const endpoint = replace(endpointTemplate, replacements);
+    const internalReplacements = correctParams(
+      {
+        assetid: 'assetId',
+        kvid: 'kvId',
+        userid: 'userId'
+      }
+    )(replacements);
 
-    return function(dispatch) {
-      // dispatch first
-      dispatch(sender(null, replacements));
+    dispatch(sender(body, internalReplacements));
 
-      log.info("GET " + modifiedEndpoint);
-
-      const request = {
-        endpoint: modifiedEndpoint,
-        replacements
-      };
-
-      // make request
-      const req = new XMLHttpRequest();
-      req.addEventListener('error', function(evt) {
-        dispatch(receiver(
-          {
-            success: false
-          },
-          request));
-      });
-      req.addEventListener('load', function() {
-        const res = {};
-
-        if (this.status === 200) {
-          res.success = true;
-          res.body = JSON.parse(this.responseText).body;
-        } else {
-          res.success = false;
+    io.socket.request(
+      {
+        method,
+        url: endpoint,
+        data: body,
+        headers: {
+          Authorization: `Bearer ${io.sails.token}`
         }
-
-        dispatch(receiver(res, request));
-      });
-      req.open('GET', modifiedEndpoint);
-      req.send();
-    };
-  };
-}
-
-/**
- * Exported method to create a thunk from a message type and endpoint.
- */
-function postify(type, endpoint) {
-  var sender = send(type);
-  var receiver = receive(type);
-
-  return function(body, replacements = {}) {
-    var modifiedEndpoint = replace(endpoint, replacements);
-
-    return function(dispatch) {
-      // dispatch first
-      dispatch(sender(body, replacements));
-
-      log.info("POST " + modifiedEndpoint, body);
-
-      // make request
-      io.socket.request(
-        {
-          method: "POST",
-          url: modifiedEndpoint,
-          data: body,
-          headers: {
-            "Authorization" : "Bearer " + io.sails.token
-          }
-        },
-        (responseBody, JWR) => {
-          dispatch(receiver(
-            responseBody,
-            {
-              endpoint: modifiedEndpoint,
-              body: body,
-              replacements: replacements
-            }));
-        });
-    };
-  };
-}
-
-/**
- * Exported method to create a thunk from a message type and endpoint.
- */
-function putify(type, endpoint) {
-  var sender = send(type);
-  var receiver = receive(type);
-
-  return function(body, replacements = {}) {
-    var modifiedEndpoint = window.env.stargazerUrl + replace(endpoint, replacements);
-
-    return function(dispatch) {
-      // dispatch first
-      dispatch(sender(body, replacements));
-
-      log.info("PUT " + modifiedEndpoint, body);
-
-      const request = {
-        endpoint: modifiedEndpoint,
-        replacements
-      };
-
-      // make request
-      const req = new XMLHttpRequest();
-      req.addEventListener('error', function(evt) {
-        dispatch(receiver(
+      },
+      (response) => {
+        const action = receiver(
+          response,
           {
-            success: false
-          },
-          request));
-      });
-      req.addEventListener('load', function() {
-        const res = {};
-
-        if (this.status === 200) {
-          res.success = true;
-          res.body = JSON.parse(this.responseText).body;
-        } else {
-          res.success = false;
-        }
-
-        dispatch(receiver(res, request));
-      });
-      req.open('PUT', modifiedEndpoint);
-      req.setRequestHeader('Content-Type', 'application/json');
-      req.send(JSON.stringify(body));
-    };
-  };
-}
-
-/**
- * Exported method to create a thunk from a message type and endpoint.
- */
-function deletify(type, endpoint) {
-  var sender = send(type);
-  var receiver = receive(type);
-
-  return function(replacements = {}) {
-    var modifiedEndpoint = replace(endpoint, replacements);
-
-    return function(dispatch) {
-      // dispatch first
-      dispatch(sender(null, replacements));
-
-      log.info("DELETE " + modifiedEndpoint);
-
-      // make request
-      io.socket.request(
-        {
-          method: "DELETE",
-          url: modifiedEndpoint,
-          headers: {
-            "Authorization" : "Bearer " + io.sails.token
+            endpoint,
+            body,
+            replacements: internalReplacements
           }
-        },
-        (body, JWR) => dispatch(receiver(
-          body,
-          {
-            endpoint: modifiedEndpoint,
-            replacements: replacements
-          })));
-    };
-  };
-}
+        );
+        dispatch(action);
+        return response.success ? resolve(action) : reject(action);
+      }
+    );
+  });
 
-export { getify, postify, putify, deletify, send, receive, replace };
+  return thunk;
+};
+
+const getify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.GET);
+const postify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST);
+const putify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT);
+const deletify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE);
+
+export {
+  getify, postify, putify, deletify, replace, requestify, send, receive
+};
