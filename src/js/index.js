@@ -3,9 +3,9 @@ const TrellisActions = require('./actions/trellisActions');
 const StargazerActions = require('./actions/stargazerActions');
 const AsyncStatus = require('./constants/AsyncStatus');
 
-module.exports = {
+export {
   Actions,
   TrellisActions,
   StargazerActions,
-  AsyncStatus: AsyncStatus.default
+  AsyncStatus,
 };
