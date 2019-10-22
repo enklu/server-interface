@@ -1,10 +1,8 @@
 /**
  * Constants for async request status.
  */
-const AsyncStatus = {
+export default {
   IN_PROGRESS: 'inprogress',
   SUCCESS: 'success',
   FAILURE: 'failure'
 };
-
-export { AsyncStatus };

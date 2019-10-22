@@ -2,9 +2,9 @@
   "name": "server-interface",
   "version": "1.0.0",
   "description": "A nice (shared) interface between our clients and our (many) servers.",
-  "main": "index.js",
+  "main": "src/js/index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,21 @@
   },
   "homepage": "https://github.com/enklu/server-interface#readme",
   "dependencies": {
+    "js-mocks": "git+ssh://git@github.com/enklu/js-mocks.git",
     "js-util": "git+ssh://git@github.com/enklu/js-util.git"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-jest": "^24.9.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ]
   }
 }
