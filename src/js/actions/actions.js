@@ -60,15 +60,6 @@ export function createAddHandler(handlers) {
   };
 }
 
-const createBaseActions = (loader) => {
-  return {
-    getify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.GET, loader),
-    postify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST, loader),
-    putify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT, loader),
-    deletify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE, loader)
-  }
-};
-
 const loadFromSocketIO = async (receiverFunc) => {
   io.socket.request(
     {
@@ -289,6 +280,15 @@ const getify = (type, endpointTemplate) => requestify(type, endpointTemplate, As
 const postify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST);
 const putify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT);
 const deletify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE);
+
+const createBaseActions = (loader) => {
+  return {
+    getify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.GET, loader),
+    postify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST, loader),
+    putify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT, loader),
+    deletify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE, loader)
+  }
+};
 
 export {
   createBaseActions,
