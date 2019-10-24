@@ -221,7 +221,7 @@ const requestify = (type, endpointTemplate, method, loader = ioLoader) => (_body
   // redux-thunk will execute this thunk and inject dispatch() in the process.
   // The thunk will return a Promise, which won't matter for normal async actions.
   // For combo events, this promise will be used to monitor the state of the request.
-  const thunk = dispatch => new Promise((resolve, reject) => {
+  const thunk = dispatch => new Promise(async (resolve, reject) => {
     const sender = send(type);
     const receiver = receive(type);
     const endpoint = replace(endpointTemplate, replacements);
