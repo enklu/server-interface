@@ -60,50 +60,6 @@ export function createAddHandler(handlers) {
   };
 }
 
-const loadFromSocketIO = async (receiverFunc) => {
-  io.socket.request(
-    {
-      method,
-      url: endpoint,
-      data: body,
-      headers: {
-        Authorization: `Bearer ${io.sails.token}`
-      }
-    },
-    (response) => {
-      const action = receiverFunc(
-        response,
-        {
-          endpoint,
-          body,
-          replacements: internalReplacements
-        }
-      );
-      return action;
-    }
-  );
-};
-
-const loadFromSocketIO2 = async (receiverFunc) => {
-  const response = await io.socket.request({
-    method,
-    url: endpoint,
-    data: body,
-    headers: {
-      Authorization: `Bearer ${io.sails.token}`
-    }
-  });
-
-  return receiverFunc(
-    response,
-    {
-      endpoint,
-      body,
-      replacements: internalReplacements
-    }
-  );
-};
-
 /**
  * Creates an action factory for receiving a message type.
  */
@@ -149,7 +105,7 @@ function send(type) {
 
 function defaultReplacements() {
   // These must be lowercase.
-  return io.sails.user
+  return typeof io !== 'undefined' && io.sails.user
     ? { userid: io.sails.user.id }
     : {};
 }
