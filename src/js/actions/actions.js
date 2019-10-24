@@ -1,5 +1,6 @@
 import AsyncStatus from '../constants/AsyncStatus';
 import AsyncMethods from '../constants/AsyncMethods';
+import ioLoader from '../loaders/ioLoader';
 
 /**
  * Shows fatal errors.
@@ -58,6 +59,59 @@ export function createAddHandler(handlers) {
     };
   };
 }
+
+const createBaseActions = (loader) => {
+  return {
+    getify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.GET, loader),
+    postify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST, loader),
+    putify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT, loader),
+    deletify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE, loader)
+  }
+};
+
+const loadFromSocketIO = async (receiverFunc) => {
+  io.socket.request(
+    {
+      method,
+      url: endpoint,
+      data: body,
+      headers: {
+        Authorization: `Bearer ${io.sails.token}`
+      }
+    },
+    (response) => {
+      const action = receiverFunc(
+        response,
+        {
+          endpoint,
+          body,
+          replacements: internalReplacements
+        }
+      );
+      return action;
+    }
+  );
+};
+
+const loadFromSocketIO2 = async (receiverFunc) => {
+  const response = await io.socket.request({
+    method,
+    url: endpoint,
+    data: body,
+    headers: {
+      Authorization: `Bearer ${io.sails.token}`
+    }
+  });
+
+  return receiverFunc(
+    response,
+    {
+      endpoint,
+      body,
+      replacements: internalReplacements
+    }
+  );
+};
 
 /**
  * Creates an action factory for receiving a message type.
@@ -152,7 +206,7 @@ function replace(endpoint, _replacements) {
   return prepared;
 }
 
-const requestify = (type, endpointTemplate, method) => (_body, _replacements = {}) => {
+const requestify = (type, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}) => {
   // TODO Can remove this if we go through the codebase and change every call.
   const { body, replacements } = {
     GET: {
@@ -190,28 +244,42 @@ const requestify = (type, endpointTemplate, method) => (_body, _replacements = {
 
     dispatch(sender(body, internalReplacements));
 
-    io.socket.request(
+  //   io.socket.request(
+  //     {
+  //       method,
+  //       url: endpoint,
+  //       data: body,
+  //       headers: {
+  //         Authorization: `Bearer ${io.sails.token}`
+  //       }
+  //     },
+  //     (response) => {
+  //       const action = receiver(
+  //         response,
+  //         {
+  //           endpoint,
+  //           body,
+  //           replacements: internalReplacements
+  //         }
+  //       );
+  //       dispatch(action);
+  //       return response.success ? resolve(action) : reject(action);
+  //     }
+  //   );
+  // });
+
+    const action = await loader(
       {
-        method,
-        url: endpoint,
-        data: body,
-        headers: {
-          Authorization: `Bearer ${io.sails.token}`
-        }
+        endpoint,
+        replacements: internalReplacements,
+        body
       },
-      (response) => {
-        const action = receiver(
-          response,
-          {
-            endpoint,
-            body,
-            replacements: internalReplacements
-          }
-        );
-        dispatch(action);
-        return response.success ? resolve(action) : reject(action);
-      }
+      receiver,
+      { method }
     );
+
+    dispatch(action);
+    return action.status === 'success' ? resolve(action) : reject(action);
   });
 
   return thunk;
@@ -223,5 +291,6 @@ const putify = (type, endpointTemplate) => requestify(type, endpointTemplate, As
 const deletify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE);
 
 export {
+  createBaseActions,
   getify, postify, putify, deletify, replace, requestify, send, receive
 };

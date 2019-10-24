@@ -4,6 +4,14 @@ import {
   getify, postify, putify, deletify
 } from './actions';
 
+export const createTrellisActions = ({ getify, postify, putify, deletify }) => {
+  return {
+    CREATEANCHOR_URI: '/v1/editor/app/:appId/scene/:sceneId/anchor/foo',
+    CREATEANCHOR: 'createanchor',
+    createanchor: postify(CREATEANCHOR, CREATEANCHOR_URI)
+  };
+}
+
 // /////////////////////////////////////////////////////////////////////////////
 // Anchors API
 // /////////////////////////////////////////////////////////////////////////////
