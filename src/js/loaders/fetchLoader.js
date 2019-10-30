@@ -13,6 +13,7 @@ export default async (request, receiverFunc, options) => {
   } catch (error) {
     console.warn(error);
     responseObj.success = false;
+    responseObj.error = error;
   }
 
   return receiverFunc(responseObj, request);
