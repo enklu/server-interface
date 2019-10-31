@@ -153,7 +153,7 @@ function replace(endpoint, _replacements) {
   return prepared;
 }
 
-const requestify = (type, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}) => {
+const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}) => {
   // TODO Can remove this if we go through the codebase and change every call.
   const { body, replacements } = {
     GET: {
@@ -191,33 +191,9 @@ const requestify = (type, endpointTemplate, method, loader = ioLoader) => (_body
 
     dispatch(sender(body, internalReplacements));
 
-  //   io.socket.request(
-  //     {
-  //       method,
-  //       url: endpoint,
-  //       data: body,
-  //       headers: {
-  //         Authorization: `Bearer ${io.sails.token}`
-  //       }
-  //     },
-  //     (response) => {
-  //       const action = receiver(
-  //         response,
-  //         {
-  //           endpoint,
-  //           body,
-  //           replacements: internalReplacements
-  //         }
-  //       );
-  //       dispatch(action);
-  //       return response.success ? resolve(action) : reject(action);
-  //     }
-  //   );
-  // });
-
     const action = await loader(
       {
-        endpoint,
+        endpoint: `${baseUrl}${endpoint}`,
         replacements: internalReplacements,
         body
       },
@@ -237,12 +213,12 @@ const postify = (type, endpointTemplate) => requestify(type, endpointTemplate, A
 const putify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT);
 const deletify = (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE);
 
-const createBaseActions = (loader) => {
+const createBaseActions = (loader, baseUrl) => {
   return {
-    getify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.GET, loader),
-    postify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.POST, loader),
-    putify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.PUT, loader),
-    deletify: (type, endpointTemplate) => requestify(type, endpointTemplate, AsyncMethods.DELETE, loader)
+    getify: (type, endpointTemplate) => requestify(type, baseUrl, endpointTemplate, AsyncMethods.GET, loader),
+    postify: (type, endpointTemplate) => requestify(type, baseUrl, endpointTemplate, AsyncMethods.POST, loader),
+    putify: (type, endpointTemplate) => requestify(type, baseUrl, endpointTemplate, AsyncMethods.PUT, loader),
+    deletify: (type, endpointTemplate) => requestify(type, baseUrl, endpointTemplate, AsyncMethods.DELETE, loader)
   }
 };
 
