@@ -62,3 +62,6 @@ typings/
 
 # other
 .idea/
+
+# Postman
+src/js/postman/config.json

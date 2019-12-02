@@ -1,0 +1,13 @@
+{
+  "headers": {
+    "X-Api-Key": "{{ your Postman API key goes here }}"
+  },
+  "targets": {
+    "trellis": {
+      "uid": "2558443-f754c943-f320-4f7a-a563-23628576fcdf"
+    },
+    "stargazer": {
+      "uid": "2558443-70be6abc-55b9-4e0a-a54c-74c0091b55f1"
+    }
+  }
+}
