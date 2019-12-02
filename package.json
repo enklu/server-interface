@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/enklu/server-interface#readme",
   "dependencies": {
+    "@babel/runtime": "^7.7.4",
     "js-mocks": "git+ssh://git@github.com/enklu/js-mocks.git",
     "js-util": "git+ssh://git@github.com/enklu/js-util.git"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.7.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "babel-jest": "^24.9.0",
