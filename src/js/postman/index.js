@@ -1,23 +1,6 @@
 const fetch = require('node-fetch');
 const minimist = require('minimist');
 
-const parseResult = (json) => {
-  console.log(json);
-}
-
-const getCollection = async ({ headers, target: { uid } } = {}) => {
-  try {
-    const result = await fetch(
-      `https://api.getpostman.com/collections/${uid}`,
-      { method: 'GET', headers }
-    );
-    const json = await result.json();
-    parseResult(json);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 const getConfig = ({ configPath }) => {
   // Get the config file.
   let config;
@@ -44,6 +27,41 @@ const getConfig = ({ configPath }) => {
     headers: config.headers,
     target: config.targets[targetName]
   };
+}
+
+const getCollection = async ({ headers, target: { uid } } = {}) => {
+  try {
+    const result = await fetch(
+      `https://api.getpostman.com/collections/${uid}`,
+      { method: 'GET', headers }
+    );
+    const json = await result.json();
+    parseResult(json);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const parseResult = (json) => {
+  console.log('Parsing result');
+  const {
+    collection: {
+      info: { name, description },
+      item
+    }
+  } = json;
+  console.log(`Received: ${name}: ${description}`);
+  console.log(`${item.length} items`);
+  item.forEach(({ name, item }) => {
+    console.log('', name);
+    item.forEach(({ name, request: { url, method } }) => {
+      console.log(' ', method, name);
+      const path = url.path.join('/').replace('{{', ':').replace('}}', ''); // v1/editor/space/{{spaceId}}
+      console.log(`  ${path} (${url.path})`);
+    })
+    console.log('');
+    // console.log(name, request, response);
+  });
 }
 
 const go = () => {
