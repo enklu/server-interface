@@ -9,10 +9,10 @@ const { default: ioLoader } = require('./loaders/ioLoader');
 
 export {
   Actions,
-  StargazerActions,
-  SnapActions,
-  AsyncStatus,
   AsyncMethods,
+  AsyncStatus,
   fetchLoader,
-  ioLoader
+  ioLoader,
+  SnapActions,
+  StargazerActions
 };
