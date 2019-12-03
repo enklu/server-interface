@@ -6,12 +6,12 @@ const fs = require('fs');
 const parseResponse = require('./util/parseResponse');
 
 const ErrorMessages = {
-  NO_CONFIG: 'This script requires a config file at "${path}.json". See config-template.json for the required format.',
+  NO_CONFIG: 'This script requires a config file at "/config.json". See /config-template.json for the required format.',
   WRONG_PARAM: 'Please specify a target with the --target parameter. Valid targets are listed in config.js.',
   SPECIFIED_TARGET_MISSING: 'Specified target does not exist in the config file.'
 };
 
-const getConfig = ({ path }) => {
+const getConfig = ({ path, targetName }) => {
   // Get the config file.
   let config;
   try {
@@ -22,14 +22,6 @@ const getConfig = ({ path }) => {
     return;
   }
 
-  // Get params.
-  let targetName = minimist(process.argv.slice(2)).target;
-  if (!targetName) {
-    throw new Error(ErrorMessages.WRONG_PARAM);
-    return;
-  }
-
-  targetName = targetName.toLowerCase();
   if (!config.targets[targetName]) {
     throw new Error(ErrorMessages.SPECIFIED_TARGET_MISSING);
   }
@@ -72,35 +64,35 @@ const parseResult = ({ json }) => {
   //  ]
   // }
   const parsedCollection = item.reduce((accum, { name: categoryName, item }) => {
-    const items = item.map(data => parseResponse({ data }));
+    const items = item.map(data => parseResponse(data));
     return { ...accum, [categoryName]: items };
   }, {});
 
-  console.log('+++');
-  console.log(parsedCollection);
   return parsedCollection;
 }
 
 const createFile = async ({ parsedCollection }) => {
-  const actionsFile = await ejs.renderFile(
+  return await ejs.renderFile(
     './src/js/postman/templates/actions.ejs',
     { parsedCollection }
   );
-  console.log(actionsFile);
-}
-
-const writeFile = async ({ file }) => {
-  const res = await fs.writeFile(`./src/js/actions/${serverName}Actions.js`, actionsFile);
-  console.log(`file ${serverName}Actions.js written`);
-  console.error(error);
 }
 
 const go = async () => {
   console.log('Creating file from Postman collection');
-  const config = getConfig({ path: './config' });
+  // Get params.
+  let targetName = minimist(process.argv.slice(2)).target;
+  if (!targetName) {
+    throw new Error(ErrorMessages.WRONG_PARAM);
+    return;
+  }
+
+  targetName = targetName.toLowerCase();
+  const config = getConfig({ path: './config', targetName });
   const json = await getCollection(config);
   const parsedCollection = parseResult({ json });
-  const file = createFile({ parsedCollection });
+  const file = await createFile({ parsedCollection });
+  const res = await fs.writeFile(`./src/js/actions/${targetName}Actions.js`, file);
 }
 
 // Export for testing.

@@ -28,17 +28,8 @@ describe('getConfig', () => {
     expect(() => getConfig({ path: 'wrongpath.json' })).toThrow(ErrorMessages.NO_CONFIG);
   });
 
-  it('should throw if the wrong param is provided', () => {
-    const testFunc = () => getConfig({ path: configPath });
-    expect(testFunc).toThrow(ErrorMessages.WRONG_PARAM);
-
-    process.argv = [...originalArgs, '--target', 'wrongTarget'];
-    expect(testFunc).toThrow(ErrorMessages.SPECIFIED_TARGET_MISSING);
-  });
-
   it('should return a config object', () => {
-    process.argv = [...originalArgs, '--target', 'trellis'];
-    const config = getConfig({ path: configPath });
+    const config = getConfig({ path: configPath, targetName: 'trellis' });
 
     expect(config).toContainAllKeys(['headers', 'target']);
     expect(config.target).toContainAllKeys(['uid', 'name']);
@@ -51,10 +42,9 @@ describe('getCollection', () => {
   });
 
   it('should fetch a collection and JSONify it', async (done) => {
-    process.argv = [...originalArgs, '--target', 'trellis'];
-    const config = getConfig({ path: configPath });
-
+    const config = getConfig({ path: configPath, targetName: 'trellis' });
     const json = await getCollection(config);
+
     expect(fetch).toHaveBeenCalled();
     expect(mockJson).toHaveBeenCalled();
     done();
