@@ -48,10 +48,3 @@ describe('getCollection', () => {
     done();
   });
 });
-
-describe('parseResult', () => {
-  it('should parse a result', () => {
-    // TODO
-  });
-});
-

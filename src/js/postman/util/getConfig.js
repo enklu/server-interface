@@ -2,7 +2,6 @@ const ErrorMessages = require('../constants/ErrorMessages');
 const config = require('../config/config');
 
 module.exports = ({ targetName }) => {
-
   if (!config) {
     throw new Error(ErrorMessages.NO_CONFIG);
   }
