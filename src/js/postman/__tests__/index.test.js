@@ -11,7 +11,7 @@ jest.mock('node-fetch', () => {
 const fetch = require('node-fetch');
 
 // Import code under test.
-const { getConfig, getCollection, ErrorMessages } = require('../index');
+const { getConfig, getCollection, ErrorMessages } = require('../index.js');
 
 // Remove console.log for cleaner tests.
 console.log = jest.fn();

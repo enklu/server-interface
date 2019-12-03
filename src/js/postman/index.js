@@ -15,7 +15,6 @@ const getConfig = ({ path, targetName }) => {
   // Get the config file.
   let config;
   try {
-    console.log('Verifying config file...');
     config = require(path);
   } catch (error) {
     throw new Error(ErrorMessages.NO_CONFIG);
@@ -26,7 +25,6 @@ const getConfig = ({ path, targetName }) => {
     throw new Error(ErrorMessages.SPECIFIED_TARGET_MISSING);
   }
 
-  console.log('Config file loaded successfully.');
   return {
     headers: config.headers,
     target: {
@@ -37,7 +35,6 @@ const getConfig = ({ path, targetName }) => {
 }
 
 const getCollection = async ({ headers, target: { uid, name } } = {}) => {
-  console.log('getting collection', uid);
   const result = await fetch(
     `https://api.getpostman.com/collections/${uid}`,
     { method: 'GET', headers }
@@ -47,22 +44,14 @@ const getCollection = async ({ headers, target: { uid, name } } = {}) => {
 }
 
 const parseResult = ({ json }) => {
-  console.log('Parsing result');
   const {
     collection: {
       info: { name, description },
       item
     }
   } = json;
-  console.log(`Received: ${name}: ${description}`);
-  console.log(`${item.length} items`);
 
-  // Structure:
-  // {
-  //  [category]: [
-  //    { uri, action, func }
-  //  ]
-  // }
+  //  [category]: [{ uri, action, func }, {}, {}, ...]
   const parsedCollection = item.reduce((accum, { name: categoryName, item }) => {
     const items = item.map(data => parseResponse(data));
     return { ...accum, [categoryName]: items };
@@ -79,7 +68,6 @@ const createFile = async ({ parsedCollection }) => {
 }
 
 const go = async () => {
-  console.log('Creating file from Postman collection');
   // Get params.
   let targetName = minimist(process.argv.slice(2)).target;
   if (!targetName) {
@@ -93,6 +81,7 @@ const go = async () => {
   const parsedCollection = parseResult({ json });
   const file = await createFile({ parsedCollection });
   const res = await fs.writeFile(`./src/js/actions/${targetName}Actions.js`, file);
+  console.log(`Successfully generated ${targetName}Actions.js`);
 }
 
 // Export for testing.
