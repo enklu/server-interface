@@ -1,4 +1,4 @@
-module.exports = (data) => {
+module.exports = (data, { assignment = 'property' } = {}) => {
   const { name, request: { url, method: _method } } = data;
   const method = _method.toLowerCase();
 
@@ -6,9 +6,11 @@ module.exports = (data) => {
   const funcName = name.split(' ').join('').toLowerCase();
   const actionName = funcName.toUpperCase();
   const uriName = `${actionName}_URI`;
-  const uriString = `${uriName}: '/${path}'`;
-  const actionString = `${actionName}: '${funcName}'`;
-  const funcString = `${funcName}: ${method === 'delete' ? 'delet' : method}ify(${actionName}, ${uriName})`
 
-  return [uriString, actionString, funcString];
+  const assignmentString = assignment === 'property' ? ':' : ' ='
+  const uri = `${uriName}${assignmentString} '/${path}'`;
+  const action = `${actionName}${assignmentString} '${funcName}'`;
+  const func = `${funcName}${assignmentString} ${method === 'delete' ? 'delet' : method}ify(${actionName}, ${uriName})`
+
+  return { uri, action, func };
 };

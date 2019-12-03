@@ -45,6 +45,7 @@ const getConfig = ({ path }) => {
 }
 
 const getCollection = async ({ headers, target: { uid, name } } = {}) => {
+  console.log('getting collection', uid);
   const result = await fetch(
     `https://api.getpostman.com/collections/${uid}`,
     { method: 'GET', headers }
@@ -53,7 +54,7 @@ const getCollection = async ({ headers, target: { uid, name } } = {}) => {
   return json;
 }
 
-const parseResult = async ({ name: serverName, json }) => {
+const parseResult = ({ json }) => {
   console.log('Parsing result');
   const {
     collection: {
@@ -64,22 +65,31 @@ const parseResult = async ({ name: serverName, json }) => {
   console.log(`Received: ${name}: ${description}`);
   console.log(`${item.length} items`);
 
-  item.forEach(({ name, item }) => {
-    console.log('', name);
-    item.forEach((data) => {
-      const [uriString, actionString, funcString] = parseResponse(data)
-      console.log(uriString, actionString, funcString);
-    })
-    console.log('');
-  });
+  // Structure:
+  // {
+  //  [category]: [
+  //    { uri, action, func }
+  //  ]
+  // }
+  const parsedCollection = item.reduce((accum, { name: categoryName, item }) => {
+    const items = item.map(data => parseResponse({ data }));
+    return { ...accum, [categoryName]: items };
+  }, {});
 
-  return;
-  const actionsFile = await ejs.renderFile('./src/js/postman/templates/actions.ejs', {
-    fileName: 'Trellis',
-    item
-  });
+  console.log('+++');
+  console.log(parsedCollection);
+  return parsedCollection;
+}
+
+const createFile = async ({ parsedCollection }) => {
+  const actionsFile = await ejs.renderFile(
+    './src/js/postman/templates/actions.ejs',
+    { parsedCollection }
+  );
   console.log(actionsFile);
+}
 
+const writeFile = async ({ file }) => {
   const res = await fs.writeFile(`./src/js/actions/${serverName}Actions.js`, actionsFile);
   console.log(`file ${serverName}Actions.js written`);
   console.error(error);
@@ -88,7 +98,9 @@ const parseResult = async ({ name: serverName, json }) => {
 const go = async () => {
   console.log('Creating file from Postman collection');
   const config = getConfig({ path: './config' });
-  const collection = await getCollection(config);
+  const json = await getCollection(config);
+  const parsedCollection = parseResult({ json });
+  const file = createFile({ parsedCollection });
 }
 
 // Export for testing.
