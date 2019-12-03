@@ -14,7 +14,8 @@ const fetch = require('node-fetch');
 const { getConfig, getCollection, ErrorMessages } = require('../index');
 
 // Remove console.log for cleaner tests.
-// console.log = jest.fn();
+console.log = jest.fn();
+
 const configPath = './config';
 const originalArgs = [...process.argv];
 
@@ -49,7 +50,7 @@ describe('getCollection', () => {
     process.argv = originalArgs;
   });
 
-  it('should fetch a collection', async (done) => {
+  it('should fetch a collection and JSONify it', async (done) => {
     process.argv = [...originalArgs, '--target', 'trellis'];
     const config = getConfig({ path: configPath });
 
@@ -60,4 +61,9 @@ describe('getCollection', () => {
   });
 });
 
+describe('parseResult', () => {
+  it('should parse a result', () => {
+    // TODO
+  });
+});
 
