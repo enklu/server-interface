@@ -7,7 +7,7 @@ import fetchLoader from './loaders/fetchLoader';
 import ioLoader from './loaders/ioLoader';
 
 // Actions
-import Actions from './actions/actions';
+import * as Actions from './actions/actions';
 import * as StargazerActions from './actions/stargazerActions';
 import * as TrellisActions from './actions/trellisActions';
 
