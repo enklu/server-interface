@@ -3,6 +3,8 @@ const minimist = require('minimist');
 const ejs = require('ejs');
 const fs = require('fs');
 
+const parseResponse = require('./util/parseResponse');
+
 const getConfig = ({ configPath }) => {
   // Get the config file.
   let config;
@@ -58,7 +60,20 @@ const parseResult = async ({ name: serverName, json }) => {
   console.log(`Received: ${name}: ${description}`);
   console.log(`${item.length} items`);
 
-  const actionsFile = await ejs.renderFile('./src/js/postman/templates/actions.ejs', { fileName: 'Trellis' });
+  item.forEach(({ name, item }) => {
+    console.log('', name);
+    item.forEach((data) => {
+      const [uriString, actionString, funcString] = parseResponse(data)
+      console.log(uriString, actionString, funcString);
+    })
+    console.log('');
+  });
+
+  return;
+  const actionsFile = await ejs.renderFile('./src/js/postman/templates/actions.ejs', {
+    fileName: 'Trellis',
+    item
+  });
   console.log(actionsFile);
 
   try {
@@ -67,17 +82,6 @@ const parseResult = async ({ name: serverName, json }) => {
   } catch (error) {
     console.error(error);
   }
-
-  // item.forEach(({ name, item }) => {
-  //   console.log('', name);
-  //   item.forEach(({ name, request: { url, method } }) => {
-  //     console.log(' ', method, name);
-  //     const path = url.path.join('/').replace('{{', ':').replace('}}', ''); // v1/editor/space/{{spaceId}}
-  //     console.log(`  ${path} (${url.path})`);
-  //   })
-  //   console.log('');
-  //   // console.log(name, request, response);
-  // });
 }
 
 const go = () => {
