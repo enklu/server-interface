@@ -1,11 +1,15 @@
-const Actions = require('./actions/actions');
-const { createTrellisActions } = require('./actions/trellisActions');
-const StargazerActions = require('./actions/stargazerActions');
-const SnapActions = require('./actions/snapActions');
-const { default: AsyncStatus } = require('./constants/AsyncStatus');
-const { default: AsyncMethods } = require('./constants/AsyncMethods');
-const { default: fetchLoader } = require('./loaders/fetchLoader');
-const { default: ioLoader } = require('./loaders/ioLoader');
+// constants
+import AsyncStatus from './constants/AsyncStatus';
+import AsyncMethods from './constants/AsyncMethods';
+
+// Loaders
+import fetchLoader from './loaders/fetchLoader';
+import ioLoader from './loaders/ioLoader';
+
+// Actions
+import Actions from './actions/actions';
+import * as StargazerActions from './actions/stargazerActions';
+import * as TrellisActions from './actions/trellisActions';
 
 export {
   Actions,
@@ -13,6 +17,6 @@ export {
   AsyncStatus,
   fetchLoader,
   ioLoader,
-  SnapActions,
-  StargazerActions
+  StargazerActions,
+  TrellisActions
 };

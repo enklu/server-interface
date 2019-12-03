@@ -222,7 +222,7 @@ const createBaseActions = (loader, baseUrl) => {
   }
 };
 
-export {
+export default {
   createBaseActions,
   getify, postify, putify, deletify, replace, requestify, send, receive
 };
