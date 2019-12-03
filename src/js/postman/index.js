@@ -3,45 +3,10 @@ const minimist = require('minimist');
 const ejs = require('ejs');
 const fs = require('fs');
 
+const getConfig = require('./util/getConfig');
+const getCollection = require('./util/getCollection');
 const parseResponse = require('./util/parseResponse');
-
-const ErrorMessages = {
-  NO_CONFIG: 'This script requires a config file at "/config.json". See /config-template.json for the required format.',
-  WRONG_PARAM: 'Please specify a target with the --target parameter. Valid targets are listed in config.js.',
-  SPECIFIED_TARGET_MISSING: 'Specified target does not exist in the config file.'
-};
-
-const getConfig = ({ path, targetName }) => {
-  // Get the config file.
-  let config;
-  try {
-    config = require(path);
-  } catch (error) {
-    throw new Error(ErrorMessages.NO_CONFIG);
-    return;
-  }
-
-  if (!config.targets[targetName]) {
-    throw new Error(ErrorMessages.SPECIFIED_TARGET_MISSING);
-  }
-
-  return {
-    headers: config.headers,
-    target: {
-      ...config.targets[targetName],
-      name: targetName
-    }
-  };
-}
-
-const getCollection = async ({ headers, target: { uid, name } } = {}) => {
-  const result = await fetch(
-    `https://api.getpostman.com/collections/${uid}`,
-    { method: 'GET', headers }
-  );
-  const json = await result.json();
-  return json;
-}
+const ErrorMessages = require('./constants/ErrorMessages');
 
 const parseResult = ({ json }) => {
   const {
@@ -76,7 +41,7 @@ const go = async () => {
   }
 
   targetName = targetName.toLowerCase();
-  const config = getConfig({ path: './config', targetName });
+  const config = getConfig({ path: '../config', targetName });
   const json = await getCollection(config);
   const parsedCollection = parseResult({ json });
   const file = await createFile({ parsedCollection });
@@ -84,10 +49,5 @@ const go = async () => {
   console.log(`Successfully generated ${targetName}Actions.js`);
 }
 
-// Export for testing.
-module.exports = { getConfig, getCollection, ErrorMessages };
-
 // Only run if we're not testing.
-if (!process.env.JEST_WORKER_ID) {
-  go();
-}
+go();

@@ -11,7 +11,9 @@ jest.mock('node-fetch', () => {
 const fetch = require('node-fetch');
 
 // Import code under test.
-const { getConfig, getCollection, ErrorMessages } = require('../index.js');
+const getConfig = require('../util/getConfig');
+const getCollection = require('../util/getCollection');
+const ErrorMessages = require('../constants/ErrorMessages');
 
 // Remove console.log for cleaner tests.
 console.log = jest.fn();
@@ -22,10 +24,6 @@ const originalArgs = [...process.argv];
 describe('getConfig', () => {
   beforeEach(() => {
     process.argv = originalArgs;
-  });
-
-  it('should throw if the wrong path is provided', () => {
-    expect(() => getConfig({ path: 'wrongpath.json' })).toThrow(ErrorMessages.NO_CONFIG);
   });
 
   it('should return a config object', () => {

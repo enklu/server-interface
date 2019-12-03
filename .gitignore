@@ -64,4 +64,4 @@ typings/
 .idea/
 
 # Postman
-src/js/postman/config.json
+src/js/postman/config/config.json
