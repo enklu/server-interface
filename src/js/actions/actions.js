@@ -7,14 +7,14 @@ import ioLoader from '../loaders/ioLoader';
  */
 export const FATALERROR = 'app.fatalerror';
 
-export function fatalerror(error) {
+const fatalerror = (error) => {
   return {
     type: FATALERROR,
     error
   };
 }
 
-export function createAddHandler(handlers) {
+const createAddHandler = (handlers) => {
   return function (name, handler) {
     handlers[name] = function (state, action) {
       const requests = { ...state.requests };
@@ -113,13 +113,13 @@ function defaultReplacements() {
 // Some code-generated params do not match our naming conventions. Rather than depend on remembering this fact every
 // time they are used, we simply change them here.
 // NOTE: This will overwrite params if there is already a property by the corrected name.
-export const correctParams = (replacementMap = {}) => (params = {}) => Object.entries(params)
+const correctParams = (replacementMap = {}) => (params = {}) => Object.entries(params)
   .reduce((accum, [name, value]) => ({
     ...accum,
     [replacementMap[name] || name]: value
   }), {});
 
-export const prepareObjectKeys = (replacementsMap = {}) => (obj = {}) => Object.entries(obj || {})
+const prepareObjectKeys = (replacementsMap = {}) => (obj = {}) => Object.entries(obj || {})
   .reduce((accum, [name, value]) => ({
     ...accum,
     [(replacementsMap[name] || name).toLowerCase()]: value
@@ -222,7 +222,8 @@ const createBaseActions = (loader, baseUrl) => {
   }
 };
 
-export default {
-  createBaseActions,
-  getify, postify, putify, deletify, replace, requestify, send, receive
+export {
+  createBaseActions, createAddHandler,
+  getify, postify, putify, deletify, requestify,
+  send, receive, replace
 };
