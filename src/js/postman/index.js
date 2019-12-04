@@ -20,7 +20,7 @@ const go = async () => {
   const config = getConfig({ path: '../config', targetName });
   const json = await getCollection(config);
   const parsedCollection = parseCollection({ json });
-  const file = await ejs.renderFile('./src/js/postman/templates/actions.ejs', { parsedCollection });
+  const file = await ejs.renderFile('./src/js/postman/templates/actions.ejs', { parsedCollection, targetName });
   const res = await fs.writeFile(`./src/js/actions/${targetName}Actions.js`, file);
   console.log(`Successfully generated ${targetName}Actions.js`);
 }

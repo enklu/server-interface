@@ -108,6 +108,7 @@ export const CREATEUSERSUBSCRIPTION = 'createusersubscription';
 // ACTIONS
 // /////////////////////////////////////////////////////////////////////////////
 export const createActions = ({ getify, postify, putify, deletify }) => ({
+    _targetName: 'stargazer',
 
     // Auth SMS
     start: postify(START, START_URI),

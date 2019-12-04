@@ -14,7 +14,17 @@ describe('index', () => {
       'fetchLoader',
       'ioLoader',
       'StargazerActions',
-      'TrellisActions'
+      'TrellisActions',
+      'initActions',
+      'getActions'
     ]);
+  });
+
+  it('should create and return actions', () => {
+    index.initActions({ loader: index.fetchLoader, baseUrl: 'https://example.com', Actions: index.TrellisActions });
+    expect(index.getActions()._targetName).toBe('trellis');
+
+    index.initActions({ loader: index.fetchLoader, baseUrl: 'https://example.com', Actions: index.StargazerActions});
+    expect(index.getActions()._targetName).toBe('stargazer');
   });
 });

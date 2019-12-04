@@ -25,6 +25,7 @@
 // ACTIONS
 // /////////////////////////////////////////////////////////////////////////////
 export const createActions = ({ getify, postify, putify, deletify }) => ({
+    _targetName: '<%= targetName %>',
 <% categories.forEach(([name, items], categoryIndex) => { %>
     // <%= name %>
 <% items.forEach(({ uri, action, func }, index) => { -%>

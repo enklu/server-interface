@@ -306,6 +306,7 @@ export const DELETESPACE = 'deletespace';
 // ACTIONS
 // /////////////////////////////////////////////////////////////////////////////
 export const createActions = ({ getify, postify, putify, deletify }) => ({
+    _targetName: 'trellis',
 
     // User
     getuser: getify(GETUSER, GETUSER_URI),
