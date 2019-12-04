@@ -7,11 +7,12 @@ module.exports = (data, assignment = { uri: 'variable', action: 'variable', func
   const actionName = funcName.toUpperCase();
   const uriName = `${actionName}_URI`;
 
+  console.log(url.raw, url.path);
   // v1/editor/space/{{spaceId}}
-  const path = url.path
-    ? url.path.join('/').replace(/\{\{/g, ':').replace(/\}\}/g, '')
+  const path = url.raw
+    ? url.raw.split('{{port}}')[1].replace(/\{\{/g, ':').replace(/\}\}/g, '')
     : '';
-  const uri = `${uriName}${assignment.uri === 'property' ? ':' : ' ='} '/${path}'`;
+  const uri = `${uriName}${assignment.uri === 'property' ? ':' : ' ='} '${path}'`;
   const action = `${actionName}${assignment.action === 'property' ? ':' : ' ='} '${funcName}'`;
   const func = `${funcName}${assignment.func === 'property' ? ':' : ' ='} ${method === 'delete' ? 'delet' : method}ify(${actionName}, ${uriName})`
 

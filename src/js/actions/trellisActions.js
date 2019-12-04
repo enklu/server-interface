@@ -6,8 +6,8 @@
 
 // User
 const GETUSER_URI = '/v1/user/:userid';
-const SEARCHUSERSBYID_URI = '/v1/user';
-const SEARCHUSERSBYEMAIL_URI = '/v1/user';
+const SEARCHUSERSBYID_URI = '/v1/user?id=:userid';
+const SEARCHUSERSBYEMAIL_URI = '/v1/user?email=:email';
 
 // Versioning
 const GETAPIVERSION_URI = '/v1/versions/api';
@@ -52,12 +52,12 @@ const GETTINGSTARTED_URI = '/v1/getstarted';
 
 // Storage
 const GETALLKVS_URI = '/v1/kv';
-const GETALLKVHEADERS_URI = '/v1/kv';
+const GETALLKVHEADERS_URI = '/v1/kv?headers=true';
 const CREATEKV_URI = '/v1/kv';
 const GETKV_URI = '/v1/kv/:kvid';
 const DELETEKV_URI = '/v1/kv/:kvid';
 const UPDATEKV_URI = '/v1/kv/:kvid';
-const GETALLKVSBYTAG_URI = '/v1/kv';
+const GETALLKVSBYTAG_URI = '/v1/kv?tags=:kvTag';
 
 // Neighborhoods
 const GETMYNEIGHBORHOODS_URI = '/v1/neighborhood';
@@ -77,7 +77,7 @@ const DELETENEIGHBORHOOD_URI = '/v1/neighborhood/:neighborhoodId';
 const CREATEFILE_URI = '/v1/file';
 const GETFILE_URI = '/v1/file/:fileId';
 const GETMYFILES_URI = '/v1/file';
-const GETMYFILESBYTAGS_URI = '/v1/file';
+const GETMYFILESBYTAGS_URI = '/v1/file?tags=:fileTags';
 const UPDATEFILEINFO_URI = '/v1/file/:fileId';
 const UPDATEFILE_URI = '/v1/file/:fileId';
 const DELETEFILE_URI = '/v1/file/:fileId';
@@ -117,7 +117,7 @@ const GETANASSET_URI = '/v1/asset/:assetid';
 const GETAPPASSETS_URI = '/v1/editor/app/:appId/library';
 const SHAREASSETWITHAPP_URI = '/v1/editor/app/:appId/library';
 const GETPERSONALASSETS_URI = '/v1/user/:userid/library';
-const GETPUBLICASSETS_URI = '/v1/library';
+const GETPUBLICASSETS_URI = '/v1/library?tag=:assetTag';
 const UPDATEANASSET_URI = '/v1/asset/:assetid';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
 const PROMOTETOSTANDARD_URI = '/v1/library/standard';
@@ -126,7 +126,7 @@ const DEMOTETOPERSONAL_URI = '/v1/user/:userid/library';
 // Script Libraries
 const GETAPPSCRIPTS_URI = '/v1/app/:appId/script-library';
 const GETPERSONALSCRIPTS_URI = '/v1/user/:userid/script-library';
-const GETPUBLICSCRIPTS_URI = '/v1/script-library';
+const GETPUBLICSCRIPTS_URI = '/v1/script-library?tag=:scriptTag';
 const GETSCRIPT_URI = '/v1/script/:scriptId';
 const CREATESCRIPT_URI = '/v1/script';
 const UPDATESCRIPT_URI = '/v1/script/:scriptId';
@@ -140,11 +140,11 @@ const GETPUBLISHEDASSETS_URI = '/v1/app/:publicAppId/asset';
 const GETPUBLISHEDASSET_URI = '/v1/app/:publicAppId/asset/:publicAssetId';
 const GETPUBLISHEDAPPSCRIPTS_URI = '/v1/app/:publicAppId/script';
 const GETPUBLISHEDSCRIPT_URI = '/v1/app/:publicAppId/script/:publicScriptId';
-const SEARCHPUBLISHEDAPPS_URI = '/v1/app';
+const SEARCHPUBLISHEDAPPS_URI = '/v1/app?query=:publicAppQuery';
 const CREATEMULTIPLAYERTOKEN_URI = '/v1/app/:appId/token';
 
 // Spaces
-const FINDSPACES_URI = '/v1/editor/space';
+const FINDSPACES_URI = '/v1/editor/space?name=:spaceNameQuery&owner=:spaceOwnerQuery';
 const CREATESPACE_URI = '/v1/editor/space';
 const GETSPACE_URI = '/v1/editor/space/:spaceId';
 const UPDATESPACE_URI = '/v1/editor/space/:spaceId';

@@ -23,7 +23,7 @@ const HOLOLENSMOBILESIGNIN_URI = '/v1/auth/mobile/signin';
 
 // Snaps
 const CREATE_URI = '/v1/snaps/create';
-const SNAPS_URI = '/v1/snaps';
+const SNAPS_URI = '/v1/snaps?type=:snapType&orgId=:snapOrgId&tag=:snapTag&start=:startDate&end=:endDate&skip=:skip&limit=:limit';
 const SNAP_URI = '/v1/snaps/:snapId';
 const SENDSNAP_URI = '/v1/snaps/:snapId';
 const DELETESNAPS_URI = '/v1/snaps';
@@ -32,10 +32,10 @@ const DELETESNAPS_URI = '/v1/snaps';
 const GETUSER_URI = '/v1/users/:userId';
 const GETUSERS_URI = '/v1/users';
 const UPDATEHANDLE_URI = '/v1/users/:userId/handle';
-const SIMILARHANDLES_URI = '/v1/users/handles/similar';
-const GETUSERSNAPS_URI = '/v1/users/:userId/snaps';
+const SIMILARHANDLES_URI = '/v1/users/handles/similar?to=:similarHandleQuery';
+const GETUSERSNAPS_URI = '/v1/users/:userId/snaps?type=:snapType&orgId=:snapOrgId&tag=:snapTag&start=:startDate&end=:endDate&skip=:skip&limit=:limit&userId=:userId';
 const ADDUSERSNAP_URI = '/v1/users/:userId/snaps';
-const GETUSERITEMS_URI = '/v1/users/:userId/items';
+const GETUSERITEMS_URI = '/v1/users/:userId/items?skip=:skip&limit=:limit';
 
 // Support
 const CONTACT_URI = '/v1/support/contact';
@@ -46,11 +46,11 @@ const CREATESESSION_URI = '/v1/sessions';
 // Items
 const CREATEITEM_URI = '/v1/items';
 const DELETEITEM_URI = '/v1/items/:itemId';
-const GETITEMS_URI = '/v1/items';
+const GETITEMS_URI = '/v1/items?skip=:skip&limit=:itemLimit';
 const GETITEM_URI = '/v1/items/:itemId';
 
 // Subscriptions
-const CREATEUSERSUBSCRIPTION_URI = '/';
+const CREATEUSERSUBSCRIPTION_URI = '';
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTION TYPES
