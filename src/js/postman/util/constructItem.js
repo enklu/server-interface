@@ -9,7 +9,7 @@ module.exports = (data, assignment = { uri: 'variable', action: 'variable', func
 
   // v1/editor/space/{{spaceId}}
   const path = url.path
-    ? url.path.join('/').replace('{{', ':').replace('}}', '')
+    ? url.path.join('/').replace(/\{\{/g, ':').replace(/\}\}/g, '')
     : '';
   const uri = `${uriName}${assignment.uri === 'property' ? ':' : ' ='} '/${path}'`;
   const action = `${actionName}${assignment.action === 'property' ? ':' : ' ='} '${funcName}'`;

@@ -31,20 +31,20 @@ const DELETEORGANIZATION_URI = '/v1/org/:secondaryOrganizationId';
 // Members
 const CREATEMEMBER_URI = '/v1/org/:organizationId/member';
 const GETALLORGANIZATIONMEMBERS_URI = '/v1/org/:organizationId/member';
-const GETORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/{{orgMemberId}}';
-const UPDATEORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/{{secondaryOrgMemberId}}';
-const DELETEORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/{{secondaryOrgMemberId}}';
+const GETORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/:orgMemberId';
+const UPDATEORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/:secondaryOrgMemberId';
+const DELETEORGANIZATIONMEMBER_URI = '/v1/org/:organizationId/member/:secondaryOrgMemberId';
 
 // Devices
 const GETORGANIZATIONDEVICES_URI = '/v1/org/:organizationId/device';
-const GETORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/{{deviceId}}';
+const GETORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/:deviceId';
 const CREATEORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device';
-const UPDATEORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/{{deviceId}}';
-const DELETEORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/{{deviceId}}';
+const UPDATEORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/:deviceId';
+const DELETEORGANIZATIONDEVICE_URI = '/v1/org/:organizationId/device/:deviceId';
 
 // Snaps
 const CREATESNAP_URI = '/v1/org/744d26da-959d-48ce-93b7-ec1071b39e24/snap/foo';
-const TRIGGERSNAP_URI = '/v1/org/:organizationId/snap/{{instanceId}}';
+const TRIGGERSNAP_URI = '/v1/org/:organizationId/snap/:instanceId';
 
 // Utilities
 const SENDEMAIL_URI = '/v1/utilities/sendmail';
@@ -64,12 +64,12 @@ const GETMYNEIGHBORHOODS_URI = '/v1/neighborhood';
 const GETNEIGHBORHOOD_URI = '/v1/neighborhood/:neighborhoodId';
 const JOINNEIGHBORHOOD_URI = '/v1/neighborhood/:neighborhoodId/neighbor';
 const GETNEIGHBORS_URI = '/v1/neighborhood/:neighborhoodId/neighbor';
-const GETNEIGHBOR_URI = '/v1/neighborhood/:neighborhoodId/neighbor/{{neighborId}}';
+const GETNEIGHBOR_URI = '/v1/neighborhood/:neighborhoodId/neighbor/:neighborId';
 const GETNEIGHBORHOODKVS_URI = '/v1/neighborhood/:neighborhoodId/kv';
-const GETNEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/{{neighborKvId}}';
+const GETNEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/:neighborKvId';
 const CREATENEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv';
-const UPDATENEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/{{neighborKvId}}';
-const DELETENEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/{{neighborKvId}}';
+const UPDATENEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/:neighborKvId';
+const DELETENEIGHBORHOODKV_URI = '/v1/neighborhood/:neighborhoodId/kv/:neighborKvId';
 const CREATENEIGHBORHOOD_URI = '/v1/neighborhood';
 const DELETENEIGHBORHOOD_URI = '/v1/neighborhood/:neighborhoodId';
 
@@ -91,26 +91,26 @@ const UPDATEAPP_URI = '/v1/editor/app/:appId';
 const DELETEAPP_URI = '/v1/editor/app/:appId';
 
 // Anchors
-const CREATEANCHOR_URI = '/v1/editor/app/:appId/scene/{{sceneId}}/anchor/foo';
-const UPLOADANCHOR_URI = '/v1/editor/app/:appId/scene/{{sceneId}}/anchor/{{anchorId}}';
+const CREATEANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/foo';
+const UPLOADANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/:anchorId';
 
 // Collaborators
 const GETAPPCOLLABORATORS_URI = '/v1/editor/app/:appId/collaborator';
 const CREATEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator';
-const UPDATEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator/{{secondaryCollaboratorId}}';
-const DELETEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator/{{secondaryCollaboratorId}}';
+const UPDATEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator/:secondaryCollaboratorId';
+const DELETEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator/:secondaryCollaboratorId';
 
 // Scenes
 const CREATESCENE_URI = '/v1/editor/app/:appId/scene';
-const GETSCENE_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const CREATESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTSTRING_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTINT_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTFLOAT_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTBOOL_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTVEC3_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const UPDATESCENEELEMENTCOL4_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
-const DELETESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/{{sceneId}}';
+const GETSCENE_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const CREATESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTSTRING_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTINT_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTFLOAT_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTBOOL_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTVEC3_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const UPDATESCENEELEMENTCOL4_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const DELETESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/:sceneId';
 
 // Asset Libraries
 const GETANASSET_URI = '/v1/asset/:assetid';
@@ -135,11 +135,11 @@ const SHARESCRIPTWITHAPP_URI = '/v1/app/:appId/script-library';
 
 // Published Apps
 const GETPUBLISHEDAPP_URI = '/v1/app/:publicAppId';
-const GETPUBLISHEDSCENE_URI = '/v1/app/:publicAppId/scene/{{publicSceneId}}';
+const GETPUBLISHEDSCENE_URI = '/v1/app/:publicAppId/scene/:publicSceneId';
 const GETPUBLISHEDASSETS_URI = '/v1/app/:publicAppId/asset';
-const GETPUBLISHEDASSET_URI = '/v1/app/:publicAppId/asset/{{publicAssetId}}';
+const GETPUBLISHEDASSET_URI = '/v1/app/:publicAppId/asset/:publicAssetId';
 const GETPUBLISHEDAPPSCRIPTS_URI = '/v1/app/:publicAppId/script';
-const GETPUBLISHEDSCRIPT_URI = '/v1/app/:publicAppId/script/{{publicScriptId}}';
+const GETPUBLISHEDSCRIPT_URI = '/v1/app/:publicAppId/script/:publicScriptId';
 const SEARCHPUBLISHEDAPPS_URI = '/v1/app';
 const CREATEMULTIPLAYERTOKEN_URI = '/v1/app/:appId/token';
 
