@@ -25,12 +25,12 @@ const getBaseActions = (name) => {
 const actionsByName = {};
 const initActions = (name, { loader, baseUrl, Actions }) => {
   if (actionsByName[name]) {
-    throw new Error(`Actions by name '${name}' have already been created.`);
+    console.log(`Actions by name '${name}' have already been created.`);
+  } else {
+    const baseActions = createBaseActions(loader, baseUrl);
+    baseActionsByName[name] = baseActions;
+    actionsByName[name] = Actions.createActions(baseActions);
   }
-
-  const baseActions = createBaseActions(loader, baseUrl);
-  baseActionsByName[name] = baseActions;
-  actionsByName[name] = Actions.createActions(baseActions);
 }
 
 const getActions = (name) => {
