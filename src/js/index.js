@@ -13,6 +13,15 @@ import * as TrellisActions from './actions/trellisActions';
 
 const { createBaseActions } = Actions;
 
+const baseActionsByName = {};
+const getBaseActions = (name) => {
+  if (!baseActionsByName[name]) {
+    throw new Error(`No base actions by name '${name}'.`);
+  }
+
+  return baseActionsByName[name];
+}
+
 const actionsByName = {};
 const initActions = (name, { loader, baseUrl, Actions }) => {
   if (actionsByName[name]) {
@@ -20,6 +29,7 @@ const initActions = (name, { loader, baseUrl, Actions }) => {
   }
 
   const baseActions = createBaseActions(loader, baseUrl);
+  baseActionsByName[name] = baseActions;
   actionsByName[name] = Actions.createActions(baseActions);
 }
 
@@ -40,5 +50,6 @@ export {
   StargazerActions,
   TrellisActions,
   initActions,
-  getActions
+  getActions,
+  getBaseActions
 };

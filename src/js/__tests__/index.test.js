@@ -16,7 +16,8 @@ describe('index', () => {
       'StargazerActions',
       'TrellisActions',
       'initActions',
-      'getActions'
+      'getActions',
+      'getBaseActions'
     ]);
   });
 
