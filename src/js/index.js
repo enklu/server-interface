@@ -11,21 +11,24 @@ import * as Actions from './actions/actions';
 import * as StargazerActions from './actions/stargazerActions';
 import * as TrellisActions from './actions/trellisActions';
 
-const actionsByTarget = {};
 const { createBaseActions } = Actions;
 
-let actions;
-const getActions = () => {
-  if (!actions) {
-    throw new Error('Call initActions() before calling getActions().');
+const actionsByName = {};
+const initActions = (name, { loader, baseUrl, Actions }) => {
+  if (actionsByName[name]) {
+    throw new Error(`Actions by name '${name}' have already been created.`);
   }
 
-  return actions;
+  const baseActions = createBaseActions(loader, baseUrl);
+  actionsByName[name] = Actions.createActions(baseActions);
 }
 
-const initActions = ({ loader, baseUrl, Actions }) => {
-  const baseActions = createBaseActions(loader, baseUrl);
-  actions = Actions.createActions(baseActions);
+const getActions = (name) => {
+  if (!actionsByName[name]) {
+    throw new Error(`Call initActions('${name}') before calling getActions('${name}').`);
+  }
+
+  return actionsByName[name];
 }
 
 export {
