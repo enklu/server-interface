@@ -7,7 +7,6 @@ module.exports = (data, assignment = { uri: 'variable', action: 'variable', func
   const actionName = funcName.toUpperCase();
   const uriName = `${actionName}_URI`;
 
-  console.log(url.raw, url.path);
   // v1/editor/space/{{spaceId}}
   const path = url.raw
     ? url.raw.split('{{port}}')[1].replace(/\{\{/g, ':').replace(/\}\}/g, '')

@@ -134,23 +134,37 @@ function replace(endpoint, _replacements) {
     ...prepareObjectKeys({ collaboratorId: 'secondarycollaboratorid' })(_replacements)
   };
 
-  let prepared = endpoint.toLowerCase();
+  let [url, queryString = ''] = endpoint.toLowerCase().split('?');
+
   Object.keys(replacements)
     .forEach((key) => {
-      prepared = prepared.replace(`:${key}`, replacements[key]);
+      url = url.replace(`:${key}`, replacements[key]);
     });
 
-  if (prepared.includes(':')) {
+  if (url.includes(':')) {
     throw new Error(
-      `Replacements did not contain all endpoint requirements: ${prepared} ${Object.keys(replacements)}.`
+      `Replacements did not contain all endpoint requirements: ${url} ${Object.keys(replacements)}.`
     );
   }
 
-  if (prepared.indexOf('{{') !== -1) {
+  if (url.indexOf('{{') !== -1) {
     throw new Error(`Endpoint did not contain all replacements: ${endpoint}`);
   }
 
-  return prepared;
+  if (queryString) {
+    const queryParams = queryString.split('&');
+    const queryObj = queryParams.reduce((accum, param) => {
+      // const [key, value] = param.split('=');
+      return { ...accum, [param.split('=')[0]]: true };
+    }, {});
+
+    queryString = Object.entries(replacements).reduce((accum, [key, value]) => {
+      const exists = queryObj[key];
+      return exists ? `${accum}${accum !== '?' ? '&' : ''}${key}=${value}` : accum;
+    }, '?');
+  }
+
+  return `${url}${queryString}`;
 }
 
 const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}) => {
