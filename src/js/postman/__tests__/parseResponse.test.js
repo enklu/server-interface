@@ -5,7 +5,7 @@ const mock = {
   request: {
     method: 'delete',
     url: {
-      path: ['v1', 'editor', 'space', '{{spaceId}}']
+      raw: 'ur{{port}}/v1/editor/space/{{spaceId}}'
     }
   }
 };
