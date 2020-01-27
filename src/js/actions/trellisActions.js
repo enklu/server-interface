@@ -16,6 +16,7 @@ const GETWEBVERSION_URI = '/v1/versions/web';
 
 // Email Auth
 const EMAILSIGNIN_URI = '/v1/email/signin';
+const INVITEUSER_URI = '/v1/user/:userid/invite';
 
 // Holo Auth
 const HOLOAUTHORIZE_URI = '/v1/holo/authorize';
@@ -103,6 +104,7 @@ const DELETEAPPCOLLABORATOR_URI = '/v1/editor/app/:appId/collaborator/:secondary
 // Scenes
 const CREATESCENE_URI = '/v1/editor/app/:appId/scene';
 const GETSCENE_URI = '/v1/editor/app/:appId/scene/:sceneId';
+const GETSCENELASTUPDATED_URI = '/v1/editor/app/:appId/scene/:sceneId?fields=updatedAt';
 const CREATESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/:sceneId';
 const UPDATESCENEELEMENTSTRING_URI = '/v1/editor/app/:appId/scene/:sceneId';
 const UPDATESCENEELEMENTINT_URI = '/v1/editor/app/:appId/scene/:sceneId';
@@ -119,14 +121,17 @@ const SHAREASSETWITHAPP_URI = '/v1/editor/app/:appId/library';
 const GETPERSONALASSETS_URI = '/v1/user/:userid/library';
 const GETPUBLICASSETS_URI = '/v1/library?tag=:assetTag';
 const UPDATEANASSET_URI = '/v1/asset/:assetid';
+const UPDATEANASSETTHUMBNAIL_URI = '/v1/asset/:assetid';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
-const PROMOTETOSTANDARD_URI = '/v1/library/standard';
-const DEMOTETOPERSONAL_URI = '/v1/user/:userid/library';
+const PROMOTEASSETTOSTANDARD_URI = '/v1/libraty/standard';
+const DEMOTEASSETTOPERSONAL_URI = '/v1/user/:userid/library';
 
 // Script Libraries
 const GETAPPSCRIPTS_URI = '/v1/app/:appId/script-library';
 const GETPERSONALSCRIPTS_URI = '/v1/user/:userid/script-library';
 const GETPUBLICSCRIPTS_URI = '/v1/script-library?tag=:scriptTag';
+const PROMOTESCRIPTTOSTANDARD_URI = '/v1/script-library';
+const DEMOTESCRIPTTOPERSONAL_URI = '/v1/script-library';
 const GETSCRIPT_URI = '/v1/script/:scriptId';
 const CREATESCRIPT_URI = '/v1/script';
 const UPDATESCRIPT_URI = '/v1/script/:scriptId';
@@ -167,6 +172,7 @@ export const GETWEBVERSION = 'getwebversion';
 
 // Email Auth
 export const EMAILSIGNIN = 'emailsignin';
+export const INVITEUSER = 'inviteuser';
 
 // Holo Auth
 export const HOLOAUTHORIZE = 'holoauthorize';
@@ -254,6 +260,7 @@ export const DELETEAPPCOLLABORATOR = 'deleteappcollaborator';
 // Scenes
 export const CREATESCENE = 'createscene';
 export const GETSCENE = 'getscene';
+export const GETSCENELASTUPDATED = 'getscenelastupdated';
 export const CREATESCENEELEMENT = 'createsceneelement';
 export const UPDATESCENEELEMENTSTRING = 'updatesceneelementstring';
 export const UPDATESCENEELEMENTINT = 'updatesceneelementint';
@@ -270,14 +277,17 @@ export const SHAREASSETWITHAPP = 'shareassetwithapp';
 export const GETPERSONALASSETS = 'getpersonalassets';
 export const GETPUBLICASSETS = 'getpublicassets';
 export const UPDATEANASSET = 'updateanasset';
+export const UPDATEANASSETTHUMBNAIL = 'updateanassetthumbnail';
 export const DELETEMYASSET = 'deletemyasset';
-export const PROMOTETOSTANDARD = 'promotetostandard';
-export const DEMOTETOPERSONAL = 'demotetopersonal';
+export const PROMOTEASSETTOSTANDARD = 'promoteassettostandard';
+export const DEMOTEASSETTOPERSONAL = 'demoteassettopersonal';
 
 // Script Libraries
 export const GETAPPSCRIPTS = 'getappscripts';
 export const GETPERSONALSCRIPTS = 'getpersonalscripts';
 export const GETPUBLICSCRIPTS = 'getpublicscripts';
+export const PROMOTESCRIPTTOSTANDARD = 'promotescripttostandard';
+export const DEMOTESCRIPTTOPERSONAL = 'demotescripttopersonal';
 export const GETSCRIPT = 'getscript';
 export const CREATESCRIPT = 'createscript';
 export const UPDATESCRIPT = 'updatescript';
@@ -320,6 +330,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
 
     // Email Auth
     emailsignin: postify(EMAILSIGNIN, EMAILSIGNIN_URI),
+    inviteuser: postify(INVITEUSER, INVITEUSER_URI),
 
     // Holo Auth
     holoauthorize: postify(HOLOAUTHORIZE, HOLOAUTHORIZE_URI),
@@ -407,6 +418,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     // Scenes
     createscene: postify(CREATESCENE, CREATESCENE_URI),
     getscene: getify(GETSCENE, GETSCENE_URI),
+    getscenelastupdated: getify(GETSCENELASTUPDATED, GETSCENELASTUPDATED_URI),
     createsceneelement: putify(CREATESCENEELEMENT, CREATESCENEELEMENT_URI),
     updatesceneelementstring: putify(UPDATESCENEELEMENTSTRING, UPDATESCENEELEMENTSTRING_URI),
     updatesceneelementint: putify(UPDATESCENEELEMENTINT, UPDATESCENEELEMENTINT_URI),
@@ -423,14 +435,17 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getpersonalassets: getify(GETPERSONALASSETS, GETPERSONALASSETS_URI),
     getpublicassets: getify(GETPUBLICASSETS, GETPUBLICASSETS_URI),
     updateanasset: putify(UPDATEANASSET, UPDATEANASSET_URI),
+    updateanassetthumbnail: putify(UPDATEANASSETTHUMBNAIL, UPDATEANASSETTHUMBNAIL_URI),
     deletemyasset: deletify(DELETEMYASSET, DELETEMYASSET_URI),
-    promotetostandard: postify(PROMOTETOSTANDARD, PROMOTETOSTANDARD_URI),
-    demotetopersonal: postify(DEMOTETOPERSONAL, DEMOTETOPERSONAL_URI),
+    promoteassettostandard: postify(PROMOTEASSETTOSTANDARD, PROMOTEASSETTOSTANDARD_URI),
+    demoteassettopersonal: postify(DEMOTEASSETTOPERSONAL, DEMOTEASSETTOPERSONAL_URI),
 
     // Script Libraries
     getappscripts: getify(GETAPPSCRIPTS, GETAPPSCRIPTS_URI),
     getpersonalscripts: getify(GETPERSONALSCRIPTS, GETPERSONALSCRIPTS_URI),
     getpublicscripts: getify(GETPUBLICSCRIPTS, GETPUBLICSCRIPTS_URI),
+    promotescripttostandard: postify(PROMOTESCRIPTTOSTANDARD, PROMOTESCRIPTTOSTANDARD_URI),
+    demotescripttopersonal: deletify(DEMOTESCRIPTTOPERSONAL, DEMOTESCRIPTTOPERSONAL_URI),
     getscript: getify(GETSCRIPT, GETSCRIPT_URI),
     createscript: postify(CREATESCRIPT, CREATESCRIPT_URI),
     updatescript: putify(UPDATESCRIPT, UPDATESCRIPT_URI),
