@@ -1,7 +1,7 @@
 {
-  "name": "server-interface",
-  "version": "1.0.0",
-  "description": "A nice (shared) interface between our clients and our (many) servers.",
+  "name": "enklu-server-api",
+  "version": "0.1.2",
+  "description": "Enklu server interface.",
   "main": "src/js/index.js",
   "scripts": {
     "test": "jest"
@@ -10,16 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/enklu/server-interface.git"
   },
-  "author": "Zack Jordan",
-  "license": "ISC",
+  "author": "Enklu",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/enklu/server-interface/issues"
   },
   "homepage": "https://github.com/enklu/server-interface#readme",
   "dependencies": {
-    "@babel/runtime": "^7.7.4",
-    "js-mocks": "git+ssh://git@github.com/enklu/js-mocks.git",
-    "js-util": "git+ssh://git@github.com/enklu/js-util.git"
+    "@babel/runtime": "^7.7.4"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.7.4",
