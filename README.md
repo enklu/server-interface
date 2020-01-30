@@ -1,8 +1,16 @@
-# server-interface
+## Overview
 
-This package contains all server-facing code, and it is imported by various tools. It will need to be
-rebuilt and committed to `master` every time a server changes.
+This package contains a generated API for Enklu services.
 
-## building
-- to build trellisActions.js: `node src/js/postman/index.js --target=trellis`
-- to build stargazerActions.js: `node src/js/postman/index.js -=target=stargazer`
+## Publishing a New Version
+
+### Setup
+
+- Login to your Postman account and generate a [Postman API key](https://trellis.postman.co/settings/me/api-keys).
+- Create a file `src/js/postman/config/config.json` from the supplied `config-template.json`.
+- Add your API key.
+
+### Building
+
+- To build `trellisActions.js`: `node src/js/postman/index.js --target=trellis`
+- To build `stargazerActions.js`: `node src/js/postman/index.js --target=stargazer`
