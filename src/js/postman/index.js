@@ -1,8 +1,7 @@
-const fetch = require('node-fetch');
 const minimist = require('minimist');
 const ejs = require('ejs');
 const fs = require('fs');
-
+const { promisify } = require('util');
 const getConfig = require('./util/getConfig');
 const getCollection = require('./util/getCollection');
 const parseCollection = require('./util/parseCollection');
@@ -21,7 +20,8 @@ const go = async () => {
   const json = await getCollection(config);
   const parsedCollection = parseCollection({ json });
   const file = await ejs.renderFile('./src/js/postman/templates/actions.ejs', { parsedCollection, targetName });
-  const res = await fs.writeFile(`./src/js/actions/${targetName}Actions.js`, file);
+  await promisify(fs.writeFile)(`./src/js/actions/${targetName}Actions.js`, file);
+
   console.log(`Successfully generated ${targetName}Actions.js`);
 }
 
