@@ -123,7 +123,7 @@ const GETPUBLICASSETS_URI = '/v1/library?tag=:assetTag';
 const UPDATEANASSET_URI = '/v1/asset/:assetid';
 const UPDATEANASSETTHUMBNAIL_URI = '/v1/asset/:assetid';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
-const PROMOTEASSETTOSTANDARD_URI = '/v1/libraty/standard';
+const PROMOTEASSETTOSTANDARD_URI = '/v1/library/standard';
 const DEMOTEASSETTOPERSONAL_URI = '/v1/user/:userid/library';
 
 // Script Libraries
@@ -131,7 +131,7 @@ const GETAPPSCRIPTS_URI = '/v1/app/:appId/script-library';
 const GETPERSONALSCRIPTS_URI = '/v1/user/:userid/script-library';
 const GETPUBLICSCRIPTS_URI = '/v1/script-library?tag=:scriptTag';
 const PROMOTESCRIPTTOSTANDARD_URI = '/v1/script-library';
-const DEMOTESCRIPTTOPERSONAL_URI = '/v1/script-library';
+const DEMOTESCRIPTTOPERSONAL_URI = '/v1/user/:userid/script-library';
 const GETSCRIPT_URI = '/v1/script/:scriptId';
 const CREATESCRIPT_URI = '/v1/script';
 const UPDATESCRIPT_URI = '/v1/script/:scriptId';
@@ -445,7 +445,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getpersonalscripts: getify(GETPERSONALSCRIPTS, GETPERSONALSCRIPTS_URI),
     getpublicscripts: getify(GETPUBLICSCRIPTS, GETPUBLICSCRIPTS_URI),
     promotescripttostandard: postify(PROMOTESCRIPTTOSTANDARD, PROMOTESCRIPTTOSTANDARD_URI),
-    demotescripttopersonal: deletify(DEMOTESCRIPTTOPERSONAL, DEMOTESCRIPTTOPERSONAL_URI),
+    demotescripttopersonal: postify(DEMOTESCRIPTTOPERSONAL, DEMOTESCRIPTTOPERSONAL_URI),
     getscript: getify(GETSCRIPT, GETSCRIPT_URI),
     createscript: postify(CREATESCRIPT, CREATESCRIPT_URI),
     updatescript: putify(UPDATESCRIPT, UPDATESCRIPT_URI),
