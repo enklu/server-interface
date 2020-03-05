@@ -125,6 +125,7 @@ const UPDATEANASSETTHUMBNAIL_URI = '/v1/asset/:assetid';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
 const PROMOTEASSETTOSTANDARD_URI = '/v1/library/standard';
 const DEMOTEASSETTOPERSONAL_URI = '/v1/user/:userid/library';
+const GETANASSETSIMPORTPARAMETERS_URI = '/v1/asset/parameters?assetId=:assetid';
 
 // Script Libraries
 const GETAPPSCRIPTS_URI = '/v1/app/:appId/script-library';
@@ -281,6 +282,7 @@ export const UPDATEANASSETTHUMBNAIL = 'updateanassetthumbnail';
 export const DELETEMYASSET = 'deletemyasset';
 export const PROMOTEASSETTOSTANDARD = 'promoteassettostandard';
 export const DEMOTEASSETTOPERSONAL = 'demoteassettopersonal';
+export const GETANASSETSIMPORTPARAMETERS = 'getanassetsimportparameters';
 
 // Script Libraries
 export const GETAPPSCRIPTS = 'getappscripts';
@@ -439,6 +441,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     deletemyasset: deletify(DELETEMYASSET, DELETEMYASSET_URI),
     promoteassettostandard: postify(PROMOTEASSETTOSTANDARD, PROMOTEASSETTOSTANDARD_URI),
     demoteassettopersonal: postify(DEMOTEASSETTOPERSONAL, DEMOTEASSETTOPERSONAL_URI),
+    getanassetsimportparameters: getify(GETANASSETSIMPORTPARAMETERS, GETANASSETSIMPORTPARAMETERS_URI),
 
     // Script Libraries
     getappscripts: getify(GETAPPSCRIPTS, GETAPPSCRIPTS_URI),
