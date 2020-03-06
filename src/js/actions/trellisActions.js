@@ -125,7 +125,7 @@ const UPDATEANASSETTHUMBNAIL_URI = '/v1/asset/:assetid';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
 const PROMOTEASSETTOSTANDARD_URI = '/v1/library/standard';
 const DEMOTEASSETTOPERSONAL_URI = '/v1/user/:userid/library';
-const GETANASSETSIMPORTPARAMETERS_URI = '/v1/asset/parameters?assetId=:assetid';
+const GETANASSETSIMPORTPARAMETERS_URI = '/v1/asset/parameters/:assetid/:version';
 
 // Script Libraries
 const GETAPPSCRIPTS_URI = '/v1/app/:appId/script-library';
