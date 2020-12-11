@@ -1,6 +1,6 @@
 {
-  "name": "enklu-server-api",
-  "version": "0.1.5",
+  "name": "@enklu/server-api",
+  "version": "2020.12.0",
   "description": "Enklu server interface.",
   "main": "src/js/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/enklu/server-interface.git"
   },
-  "author": "Enklu",
+  "author": "Enklu, Inc.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/enklu/server-interface/issues"
