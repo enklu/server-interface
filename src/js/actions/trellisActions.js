@@ -92,8 +92,9 @@ const UPDATEAPP_URI = '/v1/editor/app/:appId';
 const DELETEAPP_URI = '/v1/editor/app/:appId';
 
 // Anchors
-const CREATEANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/foo';
-const UPLOADANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/:anchorId';
+const CREATESCENEANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/foo';
+const UPLOADSCENEANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/:anchorId';
+const UPLOADSPACEANCHOR_URI = '/v1/editor/app/:spaceId/anchor/';
 
 // Collaborators
 const GETAPPCOLLABORATORS_URI = '/v1/editor/app/:appId/collaborator';
@@ -146,7 +147,7 @@ const GETPUBLISHEDASSETS_URI = '/v1/app/:publicAppId/asset';
 const GETPUBLISHEDASSET_URI = '/v1/app/:publicAppId/asset/:publicAssetId';
 const GETPUBLISHEDAPPSCRIPTS_URI = '/v1/app/:publicAppId/script';
 const GETPUBLISHEDSCRIPT_URI = '/v1/app/:publicAppId/script/:publicScriptId';
-const SEARCHPUBLISHEDAPPS_URI = '/v1/app?query=:publicAppQuery';
+const SEARCHPUBLISHEDAPPS_URI = '/v1/app?query=:publicAppQuery&access=:accessQuery';
 const CREATEMULTIPLAYERTOKEN_URI = '/v1/app/:appId/token';
 
 // Spaces
@@ -249,8 +250,9 @@ export const UPDATEAPP = 'updateapp';
 export const DELETEAPP = 'deleteapp';
 
 // Anchors
-export const CREATEANCHOR = 'createanchor';
-export const UPLOADANCHOR = 'uploadanchor';
+export const CREATESCENEANCHOR = 'createsceneanchor';
+export const UPLOADSCENEANCHOR = 'uploadsceneanchor';
+export const UPLOADSPACEANCHOR = 'uploadspaceanchor';
 
 // Collaborators
 export const GETAPPCOLLABORATORS = 'getappcollaborators';
@@ -408,8 +410,9 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     deleteapp: deletify(DELETEAPP, DELETEAPP_URI),
 
     // Anchors
-    createanchor: postify(CREATEANCHOR, CREATEANCHOR_URI),
-    uploadanchor: putify(UPLOADANCHOR, UPLOADANCHOR_URI),
+    createsceneanchor: postify(CREATESCENEANCHOR, CREATESCENEANCHOR_URI),
+    uploadsceneanchor: putify(UPLOADSCENEANCHOR, UPLOADSCENEANCHOR_URI),
+    uploadspaceanchor: postify(UPLOADSPACEANCHOR, UPLOADSPACEANCHOR_URI),
 
     // Collaborators
     getappcollaborators: getify(GETAPPCOLLABORATORS, GETAPPCOLLABORATORS_URI),
