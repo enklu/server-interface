@@ -1,14 +1,17 @@
 export default async (request, receiverFunc, options) => {
-  const { endpoint } = request;
+  const { endpoint, body, customOptions } = request;
   const responseObj = {};
   try {
-    const response = await fetch(endpoint, options);
+    const response = await fetch(endpoint, { ...options, ...customOptions, body });
+    const responseJSON = await response.json();
     if (response.status === 200) {
-      const responseJSON = await response.json();
       responseObj.success = true;
       responseObj.body = responseJSON.body;
     } else {
       responseObj.success = false;
+      if (responseJSON.error) {
+        responseObj.error = new Error(responseJSON.error);
+      }
     }
   } catch (error) {
     console.warn(error);
