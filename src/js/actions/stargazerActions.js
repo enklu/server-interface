@@ -11,7 +11,9 @@ const VERIFY_URI = '/v1/auth/sms/verify';
 // Auth Email
 const EMAILSIGNUPWITHPAYMENT_URI = '/v1/auth/email/signup';
 const EMAILSIGNUPWITHLICENSE_URI = '/v1/auth/email/signup';
+const EMAILSIGNUPFREE_URI = '/v1/users/create';
 const EMAILSIGNIN_URI = '/v1/auth/email/signin';
+const EMAILSIGNINFREE_URI = '/v1/auth/email/signin';
 
 // Auth HoloLens
 const HOLOAUTHORIZE_URI = '/v1/auth/holo/authorize';
@@ -33,9 +35,10 @@ const GETUSER_URI = '/v1/users/:userId';
 const GETUSERS_URI = '/v1/users';
 const UPDATEHANDLE_URI = '/v1/users/:userId/handle';
 const SIMILARHANDLES_URI = '/v1/users/handles/similar?to=:similarHandleQuery';
-const GETUSERSNAPS_URI = '/v1/users/:userId/snaps?type=:snapType&orgId=:snapOrgId&tag=:snapTag&start=:startDate&end=:endDate&skip=:skip&limit=:limit&userId=:userId';
+const GETUSERSNAPS_URI = '/v1/users/:userId/snaps?type=:snapType&orgId=:snapOrgId&tag=:snapTag&start=:startDate&end=:endDate&skip=:skip&limit=:limit';
 const ADDUSERSNAP_URI = '/v1/users/:userId/snaps';
 const GETUSERITEMS_URI = '/v1/users/:userId/items?skip=:skip&limit=:limit';
+const ADDDEVICEUSAGETIME_URI = '/v1/users/:userId/device/:hardwareName/usage';
 
 // Support
 const CONTACT_URI = '/v1/support/contact';
@@ -63,7 +66,9 @@ export const VERIFY = 'verify';
 // Auth Email
 export const EMAILSIGNUPWITHPAYMENT = 'emailsignupwithpayment';
 export const EMAILSIGNUPWITHLICENSE = 'emailsignupwithlicense';
+export const EMAILSIGNUPFREE = 'emailsignupfree';
 export const EMAILSIGNIN = 'emailsignin';
+export const EMAILSIGNINFREE = 'emailsigninfree';
 
 // Auth HoloLens
 export const HOLOAUTHORIZE = 'holoauthorize';
@@ -117,7 +122,9 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     // Auth Email
     emailsignupwithpayment: postify(EMAILSIGNUPWITHPAYMENT, EMAILSIGNUPWITHPAYMENT_URI),
     emailsignupwithlicense: postify(EMAILSIGNUPWITHLICENSE, EMAILSIGNUPWITHLICENSE_URI),
+    emailsignupfree: postify(EMAILSIGNUPFREE, EMAILSIGNUPFREE_URI),
     emailsignin: postify(EMAILSIGNIN, EMAILSIGNIN_URI),
+    emailsigninfree: postify(EMAILSIGNINFREE, EMAILSIGNINFREE_URI),
 
     // Auth HoloLens
     holoauthorize: postify(HOLOAUTHORIZE, HOLOAUTHORIZE_URI),
