@@ -93,6 +93,7 @@ export const SIMILARHANDLES = 'similarhandles';
 export const GETUSERSNAPS = 'getusersnaps';
 export const ADDUSERSNAP = 'addusersnap';
 export const GETUSERITEMS = 'getuseritems';
+export const ADDDEVICEUSAGETIME = 'adddeviceusagetime';
 
 // Support
 export const CONTACT = 'contact';
@@ -149,6 +150,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getusersnaps: getify(GETUSERSNAPS, GETUSERSNAPS_URI),
     addusersnap: putify(ADDUSERSNAP, ADDUSERSNAP_URI),
     getuseritems: getify(GETUSERITEMS, GETUSERITEMS_URI),
+    adddeviceusagetime: putify(ADDDEVICEUSAGETIME, ADDDEVICEUSAGETIME_URI),
 
     // Support
     contact: postify(CONTACT, CONTACT_URI),
