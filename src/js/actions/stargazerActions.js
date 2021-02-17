@@ -52,8 +52,15 @@ const DELETEITEM_URI = '/v1/items/:itemId';
 const GETITEMS_URI = '/v1/items?skip=:skip&limit=:itemLimit';
 const GETITEM_URI = '/v1/items/:itemId';
 
-// Subscriptions
-const CREATEUSERSUBSCRIPTION_URI = '';
+// PasswordReset
+const ISSUETOKEN(AKASENDRESETEMAIL)_URI = '/v1/users/:userId';
+const VALIDTOKEN_URI = '/v1/users/:userId';
+const RESETPASSWORD_URI = '/v1/reset/resetPassword';
+
+// CRM
+const CREATECONTACT_URI = '/v1/users/crm/createContact';
+const FINDCONTACT_URI = '/v1/users/crm/findContactId';
+const UPDATECONTACT_URI = '/v1/users/crm/findContactId';
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTION TYPES
@@ -107,8 +114,15 @@ export const DELETEITEM = 'deleteitem';
 export const GETITEMS = 'getitems';
 export const GETITEM = 'getitem';
 
-// Subscriptions
-export const CREATEUSERSUBSCRIPTION = 'createusersubscription';
+// PasswordReset
+export const ISSUETOKEN(AKASENDRESETEMAIL) = 'issuetoken(akasendresetemail)';
+export const VALIDTOKEN = 'validtoken';
+export const RESETPASSWORD = 'resetpassword';
+
+// CRM
+export const CREATECONTACT = 'createcontact';
+export const FINDCONTACT = 'findcontact';
+export const UPDATECONTACT = 'updatecontact';
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTIONS
@@ -164,6 +178,13 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getitems: getify(GETITEMS, GETITEMS_URI),
     getitem: getify(GETITEM, GETITEM_URI),
 
-    // Subscriptions
-    createusersubscription: getify(CREATEUSERSUBSCRIPTION, CREATEUSERSUBSCRIPTION_URI)
+    // PasswordReset
+    issuetoken(akasendresetemail): getify(ISSUETOKEN(AKASENDRESETEMAIL), ISSUETOKEN(AKASENDRESETEMAIL)_URI),
+    validtoken: getify(VALIDTOKEN, VALIDTOKEN_URI),
+    resetpassword: postify(RESETPASSWORD, RESETPASSWORD_URI),
+
+    // CRM
+    createcontact: postify(CREATECONTACT, CREATECONTACT_URI),
+    findcontact: postify(FINDCONTACT, FINDCONTACT_URI),
+    updatecontact: postify(UPDATECONTACT, UPDATECONTACT_URI)
 });
