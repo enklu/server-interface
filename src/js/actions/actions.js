@@ -167,8 +167,9 @@ function replace(endpoint, _replacements) {
   return `${url}${queryString}`;
 }
 
-const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}, customOptions = {}) => {
+const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}, _customOptions = {}) => {
   // TODO Can remove this if we go through the codebase and change every call.
+  const customOptions = _customOptions
   const { body, replacements } = {
     GET: {
       body: null,
