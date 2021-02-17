@@ -205,7 +205,7 @@ const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) 
     )(replacements);
 
 
-    dispatch(sender(body, internalReplacements, customOptions));
+    dispatch(sender(body, internalReplacements));
 
     const action = await loader(
       {
