@@ -1,6 +1,6 @@
 {
   "name": "@enklu/server-api",
-  "version": "2020.12.1",
+  "version": "2020.12.2",
   "description": "Enklu server interface.",
   "main": "src/js/index.js",
   "scripts": {
