@@ -97,7 +97,7 @@ function send(type) {
       status: AsyncStatus.IN_PROGRESS,
       request: {
         body: request,
-        replacements
+        replacements,
       }
     };
   };
@@ -167,8 +167,9 @@ function replace(endpoint, _replacements) {
   return `${url}${queryString}`;
 }
 
-const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}) => {
+const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) => (_body, _replacements = {}, _customOptions = {}) => {
   // TODO Can remove this if we go through the codebase and change every call.
+  const customOptions = _customOptions
   const { body, replacements } = {
     GET: {
       body: null,
@@ -203,13 +204,15 @@ const requestify = (type, baseUrl, endpointTemplate, method, loader = ioLoader) 
       }
     )(replacements);
 
+
     dispatch(sender(body, internalReplacements));
 
     const action = await loader(
       {
         endpoint: `${baseUrl}${endpoint}`,
         replacements: internalReplacements,
-        body
+        body,
+        customOptions
       },
       receiver,
       { method }
