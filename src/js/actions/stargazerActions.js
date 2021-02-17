@@ -53,7 +53,7 @@ const GETITEMS_URI = '/v1/items?skip=:skip&limit=:itemLimit';
 const GETITEM_URI = '/v1/items/:itemId';
 
 // PasswordReset
-const ISSUETOKEN_URI = '/v1/reset/issueToken';
+const ISSUETOKEN_URI = '/v1/reset/issueToken?email=:email';
 const VALIDTOKEN_URI = '/v1/reset/validToken';
 const RESETPASSWORD_URI = '/v1/reset/resetPassword';
 
