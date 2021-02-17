@@ -53,7 +53,7 @@ const GETITEMS_URI = '/v1/items?skip=:skip&limit=:itemLimit';
 const GETITEM_URI = '/v1/items/:itemId';
 
 // PasswordReset
-const ISSUETOKEN(AKASENDRESETEMAIL)_URI = '/v1/reset/issueToken';
+const ISSUETOKEN_URI = '/v1/reset/issueToken';
 const VALIDTOKEN_URI = '/v1/reset/validToken';
 const RESETPASSWORD_URI = '/v1/reset/resetPassword';
 
@@ -115,7 +115,7 @@ export const GETITEMS = 'getitems';
 export const GETITEM = 'getitem';
 
 // PasswordReset
-export const ISSUETOKEN(AKASENDRESETEMAIL) = 'issuetoken(akasendresetemail)';
+export const ISSUETOKEN = 'issuetoken';
 export const VALIDTOKEN = 'validtoken';
 export const RESETPASSWORD = 'resetpassword';
 
@@ -179,7 +179,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getitem: getify(GETITEM, GETITEM_URI),
 
     // PasswordReset
-    issuetoken(akasendresetemail): getify(ISSUETOKEN(AKASENDRESETEMAIL), ISSUETOKEN(AKASENDRESETEMAIL)_URI),
+    issuetoken: getify(ISSUETOKEN, ISSUETOKEN_URI),
     validtoken: getify(VALIDTOKEN, VALIDTOKEN_URI),
     resetpassword: postify(RESETPASSWORD, RESETPASSWORD_URI),
 
