@@ -53,8 +53,8 @@ const GETITEMS_URI = '/v1/items?skip=:skip&limit=:itemLimit';
 const GETITEM_URI = '/v1/items/:itemId';
 
 // PasswordReset
-const ISSUETOKEN(AKASENDRESETEMAIL)_URI = '/v1/users/:userId';
-const VALIDTOKEN_URI = '/v1/users/:userId';
+const ISSUETOKEN(AKASENDRESETEMAIL)_URI = '/v1/reset/issueToken';
+const VALIDTOKEN_URI = '/v1/reset/validToken';
 const RESETPASSWORD_URI = '/v1/reset/resetPassword';
 
 // CRM
