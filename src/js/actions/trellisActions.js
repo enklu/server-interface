@@ -123,6 +123,7 @@ const GETPERSONALASSETS_URI = '/v1/user/:userid/library';
 const GETPUBLICASSETS_URI = '/v1/library?tag=:assetTag';
 const UPDATEANASSET_URI = '/v1/asset/:assetid';
 const UPDATEANASSETTHUMBNAIL_URI = '/v1/asset/:assetid';
+const DUPLICATEANASSET_URI = '/v1/asset/:assetid/duplicate';
 const DELETEMYASSET_URI = '/v1/asset/:assetid';
 const PROMOTEASSETTOSTANDARD_URI = '/v1/library/standard';
 const DEMOTEASSETTOPERSONAL_URI = '/v1/user/:userid/library';
@@ -157,6 +158,8 @@ const GETSPACE_URI = '/v1/editor/space/:spaceId';
 const UPDATESPACE_URI = '/v1/editor/space/:spaceId';
 const UPDATESPACEVALUE_URI = '/v1/editor/space/:spaceId';
 const DELETESPACE_URI = '/v1/editor/space/:spaceId';
+
+// Remote Assist
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTION TYPES
@@ -281,6 +284,7 @@ export const GETPERSONALASSETS = 'getpersonalassets';
 export const GETPUBLICASSETS = 'getpublicassets';
 export const UPDATEANASSET = 'updateanasset';
 export const UPDATEANASSETTHUMBNAIL = 'updateanassetthumbnail';
+export const DUPLICATEANASSET = 'duplicateanasset';
 export const DELETEMYASSET = 'deletemyasset';
 export const PROMOTEASSETTOSTANDARD = 'promoteassettostandard';
 export const DEMOTEASSETTOPERSONAL = 'demoteassettopersonal';
@@ -315,6 +319,8 @@ export const GETSPACE = 'getspace';
 export const UPDATESPACE = 'updatespace';
 export const UPDATESPACEVALUE = 'updatespacevalue';
 export const DELETESPACE = 'deletespace';
+
+// Remote Assist
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTIONS
@@ -441,6 +447,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getpublicassets: getify(GETPUBLICASSETS, GETPUBLICASSETS_URI),
     updateanasset: putify(UPDATEANASSET, UPDATEANASSET_URI),
     updateanassetthumbnail: putify(UPDATEANASSETTHUMBNAIL, UPDATEANASSETTHUMBNAIL_URI),
+    duplicateanasset: putify(DUPLICATEANASSET, DUPLICATEANASSET_URI),
     deletemyasset: deletify(DELETEMYASSET, DELETEMYASSET_URI),
     promoteassettostandard: postify(PROMOTEASSETTOSTANDARD, PROMOTEASSETTOSTANDARD_URI),
     demoteassettopersonal: postify(DEMOTEASSETTOPERSONAL, DEMOTEASSETTOPERSONAL_URI),
@@ -474,5 +481,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getspace: getify(GETSPACE, GETSPACE_URI),
     updatespace: putify(UPDATESPACE, UPDATESPACE_URI),
     updatespacevalue: putify(UPDATESPACEVALUE, UPDATESPACEVALUE_URI),
-    deletespace: deletify(DELETESPACE, DELETESPACE_URI)
+    deletespace: deletify(DELETESPACE, DELETESPACE_URI),
+
+    // Remote Assist
 });
