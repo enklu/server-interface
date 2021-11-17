@@ -22,6 +22,9 @@ const INVITEUSER_URI = '/v1/user/:userid/invite';
 const HOLOAUTHORIZE_URI = '/v1/holo/authorize';
 const HOLOSIGNIN_URI = '/v1/holo/signin';
 
+// Refresh Auth
+const REFRESHSIGNIN_URI = '/v1/refresh/signin';
+
 // Organizations
 const CREATEORGANIZATION_URI = '/v1/org';
 const GETMYORGANIZATIONS_URI = '/v1/org';
@@ -90,6 +93,8 @@ const CREATEAPP_URI = '/v1/editor/app';
 const DUPLICATEAPP_URI = '/v1/editor/app';
 const UPDATEAPP_URI = '/v1/editor/app/:appId';
 const DELETEAPP_URI = '/v1/editor/app/:appId';
+const PUBLISHAPP_URI = '/v1/editor/app/:appId/publish';
+const UNPUBLISHAPP_URI = '/v1/editor/app/:appId/unpublish';
 
 // Anchors
 const CREATESCENEANCHOR_URI = '/v1/editor/app/:appId/scene/:sceneId/anchor/foo';
@@ -183,6 +188,9 @@ export const INVITEUSER = 'inviteuser';
 export const HOLOAUTHORIZE = 'holoauthorize';
 export const HOLOSIGNIN = 'holosignin';
 
+// Refresh Auth
+export const REFRESHSIGNIN = 'refreshsignin';
+
 // Organizations
 export const CREATEORGANIZATION = 'createorganization';
 export const GETMYORGANIZATIONS = 'getmyorganizations';
@@ -251,6 +259,8 @@ export const CREATEAPP = 'createapp';
 export const DUPLICATEAPP = 'duplicateapp';
 export const UPDATEAPP = 'updateapp';
 export const DELETEAPP = 'deleteapp';
+export const PUBLISHAPP = 'publishapp';
+export const UNPUBLISHAPP = 'unpublishapp';
 
 // Anchors
 export const CREATESCENEANCHOR = 'createsceneanchor';
@@ -346,6 +356,9 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     holoauthorize: postify(HOLOAUTHORIZE, HOLOAUTHORIZE_URI),
     holosignin: postify(HOLOSIGNIN, HOLOSIGNIN_URI),
 
+    // Refresh Auth
+    refreshsignin: postify(REFRESHSIGNIN, REFRESHSIGNIN_URI),
+
     // Organizations
     createorganization: postify(CREATEORGANIZATION, CREATEORGANIZATION_URI),
     getmyorganizations: getify(GETMYORGANIZATIONS, GETMYORGANIZATIONS_URI),
@@ -414,6 +427,8 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     duplicateapp: postify(DUPLICATEAPP, DUPLICATEAPP_URI),
     updateapp: putify(UPDATEAPP, UPDATEAPP_URI),
     deleteapp: deletify(DELETEAPP, DELETEAPP_URI),
+    publishapp: putify(PUBLISHAPP, PUBLISHAPP_URI),
+    unpublishapp: putify(UNPUBLISHAPP, UNPUBLISHAPP_URI),
 
     // Anchors
     createsceneanchor: postify(CREATESCENEANCHOR, CREATESCENEANCHOR_URI),
