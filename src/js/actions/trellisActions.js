@@ -166,6 +166,11 @@ const DELETESPACE_URI = '/v1/editor/space/:spaceId';
 
 // Remote Assist
 
+// Thumbnails
+const CREATETHUMB_URI = '/v1/app/:appId/thumb';
+const DELETETHUMB_URI = '/v1/app/:appId/thumb';
+const GETTHUMB_URI = '/v1/thumb/:thumbId';
+
 // /////////////////////////////////////////////////////////////////////////////
 // ACTION TYPES
 // /////////////////////////////////////////////////////////////////////////////
@@ -331,6 +336,11 @@ export const UPDATESPACEVALUE = 'updatespacevalue';
 export const DELETESPACE = 'deletespace';
 
 // Remote Assist
+
+// Thumbnails
+export const CREATETHUMB = 'createthumb';
+export const DELETETHUMB = 'deletethumb';
+export const GETTHUMB = 'getthumb';
 
 // /////////////////////////////////////////////////////////////////////////////
 // ACTIONS
@@ -499,4 +509,9 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     deletespace: deletify(DELETESPACE, DELETESPACE_URI),
 
     // Remote Assist
+
+    // Thumbnails
+    createthumb: postify(CREATETHUMB, CREATETHUMB_URI),
+    deletethumb: deletify(DELETETHUMB, DELETETHUMB_URI),
+    getthumb: getify(GETTHUMB, GETTHUMB_URI)
 });
