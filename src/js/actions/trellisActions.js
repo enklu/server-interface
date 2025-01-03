@@ -124,6 +124,7 @@ const DELETESCENEELEMENT_URI = '/v1/editor/app/:appId/scene/:sceneId';
 const GETANASSET_URI = '/v1/asset/:assetid';
 const GETAPPASSETS_URI = '/v1/editor/app/:appId/library';
 const SHAREASSETWITHAPP_URI = '/v1/editor/app/:appId/library';
+const UNSHAREASSETWITHAPP_URI = '/v1/editor/app/:appId/library';
 const GETPERSONALASSETS_URI = '/v1/user/:userid/library';
 const GETPUBLICASSETS_URI = '/v1/library?tag=:assetTag';
 const UPDATEANASSET_URI = '/v1/asset/:assetid';
@@ -295,6 +296,7 @@ export const DELETESCENEELEMENT = 'deletesceneelement';
 export const GETANASSET = 'getanasset';
 export const GETAPPASSETS = 'getappassets';
 export const SHAREASSETWITHAPP = 'shareassetwithapp';
+export const UNSHAREASSETWITHAPP = 'unshareassetwithapp';
 export const GETPERSONALASSETS = 'getpersonalassets';
 export const GETPUBLICASSETS = 'getpublicassets';
 export const UPDATEANASSET = 'updateanasset';
@@ -468,6 +470,7 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     getanasset: getify(GETANASSET, GETANASSET_URI),
     getappassets: getify(GETAPPASSETS, GETAPPASSETS_URI),
     shareassetwithapp: postify(SHAREASSETWITHAPP, SHAREASSETWITHAPP_URI),
+    unshareassetwithapp: deletify(UNSHAREASSETWITHAPP, UNSHAREASSETWITHAPP_URI),
     getpersonalassets: getify(GETPERSONALASSETS, GETPERSONALASSETS_URI),
     getpublicassets: getify(GETPUBLICASSETS, GETPUBLICASSETS_URI),
     updateanasset: putify(UPDATEANASSET, UPDATEANASSET_URI),
