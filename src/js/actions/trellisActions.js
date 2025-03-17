@@ -22,6 +22,10 @@ const INVITEUSER_URI = '/v1/user/:userid/invite';
 const HOLOAUTHORIZE_URI = '/v1/holo/authorize';
 const HOLOSIGNIN_URI = '/v1/holo/signin';
 
+// Spectacles Auth
+const SPECTACLESAUTHORIZE_URI = '/v1/spectacles/authorize';
+const SPECTACLESSIGNIN_URI = '/v1/spectacles/signin';
+
 // Refresh Auth
 const REFRESHSIGNIN_URI = '/v1/refresh/signin';
 
@@ -193,6 +197,10 @@ export const INVITEUSER = 'inviteuser';
 // Holo Auth
 export const HOLOAUTHORIZE = 'holoauthorize';
 export const HOLOSIGNIN = 'holosignin';
+
+// Spectacles Auth
+export const SPECTACLESAUTHORIZE = 'spectaclesauthorize';
+export const SPECTACLESSIGNIN = 'spectaclessignin';
 
 // Refresh Auth
 export const REFRESHSIGNIN = 'refreshsignin';
@@ -367,6 +375,10 @@ export const createActions = ({ getify, postify, putify, deletify }) => ({
     // Holo Auth
     holoauthorize: postify(HOLOAUTHORIZE, HOLOAUTHORIZE_URI),
     holosignin: postify(HOLOSIGNIN, HOLOSIGNIN_URI),
+
+    // Spectacles Auth
+    spectaclesauthorize: postify(SPECTACLESAUTHORIZE, SPECTACLESAUTHORIZE_URI),
+    spectaclessignin: postify(SPECTACLESSIGNIN, SPECTACLESSIGNIN_URI),
 
     // Refresh Auth
     refreshsignin: postify(REFRESHSIGNIN, REFRESHSIGNIN_URI),
